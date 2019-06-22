@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import './index.scss';
+
 import Login from './component/Login';
 import * as serviceWorker from './serviceWorker';
+
 
 ReactDOM.render(<Login />, document.getElementById('root'));
 
