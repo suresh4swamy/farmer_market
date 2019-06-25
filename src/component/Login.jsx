@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Login.scss';
 import GoogleLogin from 'react-google-login';
-// import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from 'react-facebook-login';
 import $ from 'jquery';
 
 
@@ -33,6 +33,9 @@ class Login extends Component {
   }
 
   render() {
+    const componentClicked = () => {
+      console.log("facebook btn clicked.");
+    }
     const responseFacebook = (response) => {
       console.log(response);
     }
@@ -44,12 +47,12 @@ class Login extends Component {
         <form className="form-signin">
           <h1 className="h3 mb-3 font-weight-normal" style={{ textAlign: "center" }}> Sign in</h1>
           <div className="social-login">
-            {/* <FacebookLogin
-              appId="1088597931155576"
+            <FacebookLogin
+              appId=" 672879663150844"
               autoLoad={true}
               fields="name,email,picture"
               onClick={componentClicked}
-              callback={responseFacebook} /> */}
+              callback={responseFacebook} />
             <GoogleLogin
               clientId="798114275164-cktjfs6el9nkvv61kdkqtn8i1paa9bek.apps.googleusercontent.com"
               buttonText="Login"
