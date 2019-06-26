@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './Login.scss';
-import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
+import './Login.scss';
 import $ from 'jquery';
 
 
