@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TextInput from "../Common/textInput";
 import DropDown from "../Common/dropDrown";
 import RadioOption from "../Common/radioOption";
+import ProfilePicture from "../Common/ProfilePic/profilePic";
 
 class PersonalDetails extends Component {
     profilePic = React.createRef();
@@ -74,16 +75,12 @@ class PersonalDetails extends Component {
         console.log(this.profilePic)
     }
 
-
     render() {
         const { name, address, state, profileType, phone, email, password, password_retype } = this.state.userDetails;
         const { statesList, profileTypes } = this.state;
 
         return (<form style={{ "maxWidth": "400px", "padding": "20px" }} onSubmit={this.handleSubmit}>
-            <div className="form-group">
-                <label htmlFor="profilePic">Profile Pic</label>
-                <input type="file" ref={this.profilePic} multiple className="form-control-file" id="profilePic" onChange={this.handleProfilePicChange} />
-            </div>
+            <ProfilePicture />
             <TextInput name="name" label="Name" value={name} onChange={this.handleChange} />
             <TextInput name="address" label="Address" value={address} onChange={this.handleChange} />
             <DropDown name="state" label="Select State" value={state} data={statesList} onChange={this.handleChange} />

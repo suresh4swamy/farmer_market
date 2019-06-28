@@ -1,0 +1,1 @@
+profile picture : Allow user to edit, crop, etc.,
