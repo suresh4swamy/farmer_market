@@ -3,12 +3,8 @@ import React from 'react';
 import AuthUserContext from './context';
 import { withFirebase } from '../Firebase';
 
-const needsEmailVerification = authUser =>
-  authUser &&
-  !authUser.emailVerified &&
-  authUser.providerData
-    .map(provider => provider.providerId)
-    .includes('password');
+// const needsEmailVerification = authUser => authUser && !authUser.emailVerified && authUser.providerData.map(provider => provider.providerId).includes('password');
+const needsEmailVerification = authUser => false;
 
 const withEmailVerification = Component => {
   class WithEmailVerification extends React.Component {
@@ -37,12 +33,12 @@ const withEmailVerification = Component => {
                     Refresh this page once you confirmed your E-Mail.
                   </p>
                 ) : (
-                  <p>
-                    Verify your E-Mail: Check your E-Mails (Spam folder
+                    <p>
+                      Verify your E-Mail: Check your E-Mails (Spam folder
                     included) for a confirmation E-Mail or send
                     another confirmation E-Mail.
                   </p>
-                )}
+                  )}
 
                 <button
                   type="button"
@@ -53,8 +49,8 @@ const withEmailVerification = Component => {
                 </button>
               </div>
             ) : (
-              <Component {...this.props} />
-            )
+                <Component {...this.props} />
+              )
           }
         </AuthUserContext.Consumer>
       );
