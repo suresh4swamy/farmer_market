@@ -15,7 +15,7 @@ const config = {
   authDomain: "farmersaleplatfo-1561457656175.firebaseapp.com",
   databaseURL: "https://farmersaleplatfo-1561457656175.firebaseio.com",
   projectId: "farmersaleplatfo-1561457656175",
-  storageBucket: "",
+  storageBucket: "farmersaleplatfo-1561457656175.appspot.com",
   messagingSenderId: "798114275164",
   appId: "1:798114275164:web:c5df9369173d7887"
 };
