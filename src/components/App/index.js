@@ -26,7 +26,7 @@ const App = () => (
     <React.Fragment>
       <Navigation />
       <Switch>
-        <Route exact path={ROUTES.LANDING} component={LandingPage} />
+
         <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
         <Route path={ROUTES.SIGN_IN} component={SignInPage} />
         <Route
@@ -37,6 +37,7 @@ const App = () => (
         <Route path={ROUTES.ACCOUNT} component={AccountPage} />
         <Route path={ROUTES.ADMIN} component={AdminPage} />
         <Route path={ROUTES.PERSONAL_DETAILS} component={PersonalDetails} />
+        <Route exact path={ROUTES.LANDING} component={LandingPage} />
       </Switch>
     </React.Fragment>
   </Router>

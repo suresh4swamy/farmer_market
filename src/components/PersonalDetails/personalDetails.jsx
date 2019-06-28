@@ -4,6 +4,7 @@ import DropDown from "../Common/dropDrown";
 import RadioOption from "../Common/radioOption";
 
 class PersonalDetails extends Component {
+    profilePic = React.createRef();
     state = {
         userDetails: {
             name: "",
@@ -69,20 +70,25 @@ class PersonalDetails extends Component {
         this.setState({ userDetails });
     }
 
+    handleProfilePicChange = evt => {
+        console.log(this.profilePic)
+    }
+
+
     render() {
         const { name, address, state, profileType, phone, email, password, password_retype } = this.state.userDetails;
         const { statesList, profileTypes } = this.state;
 
         return (<form style={{ "maxWidth": "400px", "padding": "20px" }} onSubmit={this.handleSubmit}>
+            <div className="form-group">
+                <label htmlFor="profilePic">Profile Pic</label>
+                <input type="file" ref={this.profilePic} multiple className="form-control-file" id="profilePic" onChange={this.handleProfilePicChange} />
+            </div>
             <TextInput name="name" label="Name" value={name} onChange={this.handleChange} />
             <TextInput name="address" label="Address" value={address} onChange={this.handleChange} />
             <DropDown name="state" label="Select State" value={state} data={statesList} onChange={this.handleChange} />
             <TextInput name="phone" label="Phone number" value={phone} onChange={this.handleChange} type="number" />
             <TextInput name="email" label="Email Id" value={email} onChange={this.handleChange} type="email" />
-            <div className="form-group">
-                <label htmlFor="profilePic">Profile Pic</label>
-                <input type="file" className="form-control-file" id="profilePic" />
-            </div>
             <RadioOption name="profileType" label="Profile Type" value={profileType} data={profileTypes} onChange={this.handleChange} />
             <TextInput name="password" label="Password" value={password} onChange={this.handleChange} type="password" />
             <TextInput name="password_retype" label="Re-type Password" value={password_retype} onChange={this.handleChange} type="password" />
