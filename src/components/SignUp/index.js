@@ -59,9 +59,9 @@ class SignUpFormBase extends Component {
           roles,
         });
       })
-      .then(() => {
-        return this.props.firebase.doSendEmailVerification();
-      })
+      // .then(() => {
+      //   return this.props.firebase.doSendEmailVerification();
+      // })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME);
@@ -103,46 +103,46 @@ class SignUpFormBase extends Component {
 
     return (
       <div className="container" style={{ backgroundImage: `url(${bg})` }}>
-      <div className="d-flex justify-content-center h-100">
-        <div className="card">
-          <div className="card-header">
-            <h3>Sign Up</h3>
-          </div>
-          <div className="card-body">
-          <form onSubmit={this.onSubmit}>
-              <div className="input-group form-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-user"></i></span>
+        <div className="d-flex justify-content-center h-100">
+          <div className="card">
+            <div className="card-header">
+              <h3>Sign Up</h3>
+            </div>
+            <div className="card-body">
+              <form onSubmit={this.onSubmit}>
+                <div className="input-group form-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text"><i className="fas fa-user"></i></span>
+                  </div>
+                  <input name="username" className="form-control" value={username} onChange={this.onChange} type="text" placeholder="Full Name" />
                 </div>
-                <input name="username" className="form-control" value={username} onChange={this.onChange} type="text" placeholder="Full Name" />
-              </div>
-              <div className="input-group form-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-envelope"></i></span>
+                <div className="input-group form-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text"><i className="fas fa-envelope"></i></span>
+                  </div>
+                  <input name="email" className="form-control" value={email} onChange={this.onChange} type="text" placeholder="Email Address" />
                 </div>
-                <input name="email" className="form-control" value={email} onChange={this.onChange} type="text" placeholder="Email Address" />
-              </div>
-              <div className="input-group form-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-key"></i></span>
+                <div className="input-group form-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text"><i className="fas fa-key"></i></span>
+                  </div>
+                  <input name="passwordOne" className="form-control" value={passwordOne} onChange={this.onChange} type="password" placeholder="Password" />
                 </div>
-                <input name="passwordOne" className="form-control" value={passwordOne} onChange={this.onChange} type="password" placeholder="Password" />
-              </div>
-              <div className="input-group form-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-key"></i></span>
+                <div className="input-group form-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text"><i className="fas fa-key"></i></span>
+                  </div>
+                  <input name="passwordTwo" className="form-control" value={passwordTwo} onChange={this.onChange} type="password" placeholder="Confirm Password" />
                 </div>
-                <input name="passwordTwo" className="form-control" value={passwordTwo} onChange={this.onChange} type="password" placeholder="Confirm Password" />
-              </div>
-              
-              <div className="form-group">
-                <button className="btn float-right login_btn" disabled={isInvalid} type="submit"> Sign Up </button>
-              </div>
-              {error && <p>{error.message}</p>}
-            </form>
+
+                <div className="form-group">
+                  <button className="btn float-right login_btn" disabled={isInvalid} type="submit"> Sign Up </button>
+                </div>
+                {error && <p>{error.message}</p>}
+              </form>
 
 
-            {/* <form onSubmit={this.onSubmit}>
+              {/* <form onSubmit={this.onSubmit}>
         <input name="username" value={username} onChange={this.onChange} type="text" placeholder="Full Name" />
         <input name="email" value={email} onChange={this.onChange} type="text" placeholder="Email Address" />
         <input name="passwordOne" value={passwordOne} onChange={this.onChange} type="password" placeholder="Password" />
@@ -152,14 +152,14 @@ class SignUpFormBase extends Component {
 
         {error && <p>{error.message}</p>}
       </form> */}
-      <div className="card-footer">
-              <label> Admin: <input name="isAdmin" type="checkbox" checked={isAdmin} onChange={this.onChangeCheckbox} /> </label>
-        </div>
+              <div className="card-footer">
+                <label> Admin: <input name="isAdmin" type="checkbox" checked={isAdmin} onChange={this.onChangeCheckbox} /> </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-      
+
     );
   }
 }
