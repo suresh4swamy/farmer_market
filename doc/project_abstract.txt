@@ -1,0 +1,66 @@
+SITE MAIN PAGE: (login not required)
+---------------
+    Objective:
+    ``````````
+        1.  Displaying all products.
+        2.  Product details must contain picture, name, quantity, price/per qty, produced type(organic/non-oranic), 
+            seller info(name, profile pic, location, contact), rating of the product.
+        3.  Cart list should be listed with all products which have been selected by a customer.
+        4.  Order will take them to a new page where they can place order (login required).
+        5.  Filter works based on ....
+        6.  Navbar for listing - products, farmers
+        7.  Wish list.
+        8.  ....
+
+FARMER PAGE: (login not required)
+------------
+    Objective:
+    ``````````
+        1.  Detail of the farmer.
+        2.  Current products on market.
+        3.  Rating of him.
+        4.  ....
+
+FARMER LIST PAGE: (login not required)
+----------------
+    Objective:
+    ``````````
+        1.  List of all farmer's minimum details.
+        2   ....
+
+PROFILE PAGE: (login required)
+------------
+    Objective:
+    ``````````
+        1.  Details of the user.
+        2.  I am a farmer [OPTION].
+        2.  ....
+
+PRODUCT PAGE: (login not required)
+------------
+    Objective:
+    ``````````
+        1.  List of products.
+        2.  Details of a product.
+        3.  ....
+
+ORDER PAGE: (login required)
+----------
+    Objective:
+    ``````````
+        1.  Place order of all products which are all in cart list.
+        2.  ....
+
+FAVOURITES PAGE: (login required)
+---------------
+    Objective:
+    ``````````
+        1.  List of products added into wish box.
+        2.  ....
+
+ADD TO CART PAGE: (login required)
+----------------
+    Objective:
+    ``````````
+        1.  List of products add into cart.
+        2.  ....
