@@ -56,7 +56,7 @@ class PersonalDetails extends Component {
             { id: "IN-PY", name: "Puducherry" }
         ],
         profileTypes: [
-            { id: "farmer", name: "Farmer" },
+            { id: "seller", name: "Seller" },
             { id: "customer", name: "Customer" }
         ]
     }
