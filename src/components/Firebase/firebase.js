@@ -68,7 +68,7 @@ class Firebase {
     });
 
   doPasswordUpdate = password =>
-    this.auth.currentUser.updatePassword(password);
+    this.auth.currentUser.updatePassword(password)
 
   // *** Merge Auth and DB User API *** //
 
@@ -114,6 +114,25 @@ class Firebase {
   message = uid => this.db.ref(`messages/${uid}`);
 
   messages = () => this.db.ref('messages');
+
+  // *** Profile API ***
+
+  profile = uid => this.db.ref(`profiles/${uid}`);
+
+  profiles = uid => this.db.ref(`profiles`);
+
+  getProfile = callback => {
+    if (this.auth.currentUser) {
+      this.profiles().once('value', snap => {
+        callback(snap.val());
+      });
+    }
+  }
+
+  doProfileUpdate = (data) => {
+    console.log({ ...data });
+    this.profile(this.auth.currentUser.uid).set({ uid: this.auth.currentUser.uid, ...data });
+  }
 }
 
 export default Firebase;
