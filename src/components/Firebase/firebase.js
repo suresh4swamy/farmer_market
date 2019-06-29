@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import personalDetailsDB from './personalDetailsDB';
 
 // const config = {
 //   apiKey: process.env.REACT_APP_API_KEY,
@@ -39,6 +40,9 @@ class Firebase {
     this.googleProvider = new app.auth.GoogleAuthProvider();
     this.facebookProvider = new app.auth.FacebookAuthProvider();
     this.twitterProvider = new app.auth.TwitterAuthProvider();
+
+    // Personal Details DB Api
+    personalDetailsDB.call(this);
   }
 
   // *** Auth API ***
@@ -115,24 +119,6 @@ class Firebase {
 
   messages = () => this.db.ref('messages');
 
-  // *** Profile API ***
-
-  profile = uid => this.db.ref(`profiles/${uid}`);
-
-  profiles = uid => this.db.ref(`profiles`);
-
-  getProfile = callback => {
-    if (this.auth.currentUser) {
-      this.profiles().once('value', snap => {
-        callback(snap.val());
-      });
-    }
-  }
-
-  doProfileUpdate = (data) => {
-    console.log({ ...data });
-    this.profile(this.auth.currentUser.uid).set({ uid: this.auth.currentUser.uid, ...data });
-  }
 }
 
 export default Firebase;
