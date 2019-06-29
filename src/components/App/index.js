@@ -16,6 +16,7 @@ import HomePage from '../Home';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import PersonalDetails from '../PersonalDetails/personalDetails';
+import ProductPage from '../Product';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -36,6 +37,7 @@ const App = () => (
         <Route path={ROUTES.ACCOUNT} component={AccountPage} />
         <Route path={ROUTES.ADMIN} component={AdminPage} />
         <Route path={ROUTES.PERSONAL_DETAILS} component={PersonalDetails} />
+        <Route path={ROUTES.PRODUCT} component={ProductPage} />
         <Route exact path={ROUTES.LANDING} component={LandingPage} />
       </Switch>
     </React.Fragment>

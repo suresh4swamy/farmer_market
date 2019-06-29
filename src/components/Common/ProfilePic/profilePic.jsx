@@ -38,6 +38,7 @@ class ProfilePicture extends Component {
         const { imgSize } = this.styles;
         return <div><div className="pic_container" style={imgSize}>
             <div className="circle" style={imgSize}>
+                { /* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
                 <img ref={this.profilePicViewer} className="profile-pic rounded-circle" onClick={this.openFileMenu} style={imgSize} alt="profile picture" src="https://img.icons8.com/dusk/64/000000/user-male-skin-type-4.png" />
             </div>
             <div className="p-image" style={this.styles.p_image}>
