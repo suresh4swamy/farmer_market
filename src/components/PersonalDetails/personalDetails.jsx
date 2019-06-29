@@ -3,6 +3,10 @@ import TextInput from "../Common/textInput";
 import DropDown from "../Common/dropDrown";
 import RadioOption from "../Common/radioOption";
 import ProfilePicture from "../Common/ProfilePic/profilePic";
+import { compose } from 'recompose';
+
+import { withAuthorization, withEmailVerification } from '../Session';
+import { withFirebase } from '../Firebase';
 
 class PersonalDetails extends Component {
     profilePic = React.createRef();
@@ -61,8 +65,22 @@ class PersonalDetails extends Component {
         ]
     }
 
+    componentDidMount() {
+        this.getProfile();
+    }
+
+    componentWillReceiveProps() {
+        this.getProfile();
+    }
+
+    getProfile = () => {
+        this.props.firebase.getProfile(data => {
+            console.log(data);
+        });
+    }
+
     handleSubmit = (val) => {
-        console.log(val)
+        this.props.firebase.doProfileUpdate(this.state.userDetails);
     }
 
     handleChange = ({ currentTarget: { name, value } }) => {
@@ -78,7 +96,7 @@ class PersonalDetails extends Component {
     render() {
         const { name, address, state, profileType, phone, email, password, password_retype } = this.state.userDetails;
         const { statesList, profileTypes } = this.state;
-
+        // console.log(this.props.firebase)
         return (<form style={{ "maxWidth": "400px", "padding": "20px" }} onSubmit={this.handleSubmit}>
             <ProfilePicture />
             <TextInput name="name" label="Name" value={name} onChange={this.handleChange} />
@@ -94,7 +112,13 @@ class PersonalDetails extends Component {
     }
 }
 
-export default PersonalDetails;
+// export default PersonalDetails;
 
+// export default withFirebase(PersonalDetails);
 
+const condition = authUser => !!authUser;
 
+export default compose(
+    withEmailVerification,
+    withAuthorization(condition),
+)(withFirebase(PersonalDetails));
