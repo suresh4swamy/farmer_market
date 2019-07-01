@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
+import './product.scss';
 
-const Product = props => (
-    <React.Fragment>
-        <h2>Product</h2>
-        <div></div>
-    </React.Fragment>
-);
+import ProductPage from './ProductPage';
+import ProductDetails from './ProductDetails';
+import CreateNewProduct from './CreateNewProduct';
 
-class ProductPage extends Component {
-    render() {
-        return (
-            <Product />
-        );
-    };
-}
-
+export { CreateNewProduct, ProductDetails };
 export default ProductPage;
