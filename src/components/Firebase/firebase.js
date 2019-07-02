@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/storage';
 import personalDetailsDB from './personalDetailsDB';
 
 // const config = {
@@ -34,6 +35,7 @@ class Firebase {
 
     this.auth = app.auth();
     this.db = app.database();
+    this.storage = app.storage();
 
     /* Social Sign In Method Provider */
 

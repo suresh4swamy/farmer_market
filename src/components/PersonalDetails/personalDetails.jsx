@@ -19,7 +19,8 @@ class PersonalDetails extends Component {
             phone: "",
             email: "",
             password: "",
-            password_retype: ""
+            password_retype: "",
+            profile_pic: "https://img.icons8.com/dusk/64/000000/user-male-skin-type-4.png"
         },
         statesList: [
             { id: "IN-AP", name: "Andhra Pradesh" },
@@ -77,6 +78,7 @@ class PersonalDetails extends Component {
         this.props.firebase.getProfile(data => {
             console.log(data);
         });
+        console.log("test ");
     }
 
     handleSubmit = (val) => {
@@ -89,16 +91,20 @@ class PersonalDetails extends Component {
         this.setState({ userDetails });
     }
 
-    handleProfilePicChange = evt => {
-        console.log(this.profilePic)
+    handleProfilePicChange = url => {
+        let userDetails = { ...this.state.userDetails };
+        userDetails.profile_pic = url;
+        this.setState({ userDetails });
+        console.log("Profile pic uploaded");
+        console.log(url);
     }
 
     render() {
-        const { name, address, state, profileType, phone, email, password, password_retype } = this.state.userDetails;
+        const { name, address, state, profileType, phone, email, password, password_retype, profile_pic } = this.state.userDetails;
         const { statesList, profileTypes } = this.state;
         // console.log(this.props.firebase)
-        return (<form style={{ "maxWidth": "400px", "padding": "20px" }} onSubmit={this.handleSubmit}>
-            <ProfilePicture />
+        return (<form style={{ "maxWidth": "400px", "padding": "20px", "margin": "auto" }} onSubmit={this.handleSubmit}>
+            <ProfilePicture src={profile_pic} onChange={this.handleProfilePicChange} firebase={this.props.firebase} />
             <TextInput name="name" label="Name" value={name} onChange={this.handleChange} />
             <TextInput name="address" label="Address" value={address} onChange={this.handleChange} />
             <DropDown name="state" label="Select State" value={state} data={statesList} onChange={this.handleChange} />

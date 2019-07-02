@@ -20,10 +20,16 @@ class ProfilePicture extends Component {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = (e) => {
-                this.profilePicViewer.current.src = e.target.result
+                // this.profilePicViewer.current.src = e.target.result;
+                this.props.firebase.uploadFile(input.files[0], this.props.onChange, this.handleOnUploadError);
             }
             reader.readAsDataURL(input.files[0]);
         }
+    }
+
+    handleOnUploadError = (error) => {
+        console.log("upload error");
+        console.log(error);
     }
 
     openFileMenu = () => {
@@ -39,7 +45,7 @@ class ProfilePicture extends Component {
         return <div><div className="pic_container" style={imgSize}>
             <div className="circle" style={imgSize}>
                 { /* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-                <img ref={this.profilePicViewer} className="profile-pic rounded-circle" onClick={this.openFileMenu} style={imgSize} alt="profile picture" src="https://img.icons8.com/dusk/64/000000/user-male-skin-type-4.png" />
+                <img ref={this.profilePicViewer} className="profile-pic rounded-circle" onClick={this.openFileMenu} style={imgSize} alt="profile picture" src={this.props.src} />
             </div>
             <div className="p-image" style={this.styles.p_image}>
                 <i className="fa fa-camera upload-button" onClick={this.openFileMenu}></i>
