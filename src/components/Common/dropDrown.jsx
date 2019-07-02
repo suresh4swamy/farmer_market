@@ -13,7 +13,7 @@ class DropDown extends Component {
         const { name, label, onChange, value } = this.props;
         return (<div className="form-group">
             <label htmlFor={name}>{label || name}</label>
-            <select className="form-control" id={name} name={name} onChange={onChange} defaultValue={value}>
+            <select className="form-control" id={name} name={name} onChange={onChange} value={value}>
                 <option value="">-</option>
                 {this.getOptions()}
             </select>

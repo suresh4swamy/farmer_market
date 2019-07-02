@@ -18,8 +18,8 @@ class PersonalDetails extends Component {
             profileType: "customer",
             phone: "",
             email: "",
-            password: "",
-            password_retype: "",
+            // password: "",
+            // password_retype: "",
             profile_pic: "https://img.icons8.com/dusk/64/000000/user-male-skin-type-4.png"
         },
         statesList: [
@@ -76,13 +76,15 @@ class PersonalDetails extends Component {
 
     getProfile = () => {
         this.props.firebase.getProfile(data => {
-            console.log(data);
+            const userDetails = data;
+            this.setState({ userDetails });
         });
-        console.log("test ");
     }
 
-    handleSubmit = (val) => {
+    handleSubmit = (evt) => {
         this.props.firebase.doProfileUpdate(this.state.userDetails);
+        evt.preventDefault();
+
     }
 
     handleChange = ({ currentTarget: { name, value } }) => {
@@ -102,7 +104,7 @@ class PersonalDetails extends Component {
     render() {
         const { name, address, state, profileType, phone, email, password, password_retype, profile_pic } = this.state.userDetails;
         const { statesList, profileTypes } = this.state;
-        // console.log(this.props.firebase)
+        // console.log(state)
         return (<form style={{ "maxWidth": "400px", "padding": "20px", "margin": "auto" }} onSubmit={this.handleSubmit}>
             <ProfilePicture src={profile_pic} onChange={this.handleProfilePicChange} firebase={this.props.firebase} />
             <TextInput name="name" label="Name" value={name} onChange={this.handleChange} />
@@ -111,8 +113,8 @@ class PersonalDetails extends Component {
             <TextInput name="phone" label="Phone number" value={phone} onChange={this.handleChange} type="number" />
             <TextInput name="email" label="Email Id" value={email} onChange={this.handleChange} type="email" />
             <RadioOption name="profileType" label="Profile Type" value={profileType} data={profileTypes} onChange={this.handleChange} />
-            <TextInput name="password" label="Password" value={password} onChange={this.handleChange} type="password" />
-            <TextInput name="password_retype" label="Re-type Password" value={password_retype} onChange={this.handleChange} type="password" />
+            {/* <TextInput name="password" label="Password" value={password} onChange={this.handleChange} type="password" />
+            <TextInput name="password_retype" label="Re-type Password" value={password_retype} onChange={this.handleChange} type="password" /> */}
             <button type="submit" className="btn btn-primary">Save</button>
         </form>);
     }

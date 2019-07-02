@@ -7,7 +7,10 @@ const personalDetailsDB = function () {
 
     this.getProfile = callback => {
         if (this.auth.currentUser) {
-            this.profiles().once('value', snap => {
+            // this.profiles().once('value', snap => {
+            //     callback(snap.val());
+            // });
+            this.profile(this.auth.currentUser.uid).once('value', snap => {
                 callback(snap.val());
             });
         }
