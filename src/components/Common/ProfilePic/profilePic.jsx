@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { readFileFromInputElement } from "../readFile";
 import "./profilePic.css";
 
 class ProfilePicture extends Component {
@@ -16,16 +17,16 @@ class ProfilePicture extends Component {
     fileUpload = React.createRef();
     profilePicViewer = React.createRef();
 
-    readURL = (input) => {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = (e) => {
-                // this.profilePicViewer.current.src = e.target.result;
-                this.props.firebase.uploadFile(input.files[0], this.props.onChange, this.handleOnUploadError);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+    // readURL = (input) => {
+    //     if (input.files && input.files[0]) {
+    //         var reader = new FileReader();
+    //         reader.onload = (e) => {
+    //             // this.profilePicViewer.current.src = e.target.result;
+    //             this.props.firebase.uploadFile(input.files[0], this.props.onChange, this.handleOnUploadError);
+    //         }
+    //         reader.readAsDataURL(input.files[0]);
+    //     }
+    // }
 
     handleOnUploadError = (error) => {
         console.log("upload error");
@@ -37,7 +38,11 @@ class ProfilePicture extends Component {
     }
 
     handleChangeFile = () => {
-        this.readURL(this.fileUpload.current);
+        readFileFromInputElement(this.fileUpload.current, this.handleOnLoadComplete);
+    }
+
+    handleOnLoadComplete = (file, inputFiles) => {
+        this.props.firebase.uploadFile(file, this.props.onChange, this.handleOnUploadError);
     }
 
     render() {

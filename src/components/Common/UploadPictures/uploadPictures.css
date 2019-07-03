@@ -1,0 +1,13 @@
+.deleteIcon{
+    font-size: 1.2em;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(255,255,255,0.5);
+    padding: 10px;
+}
+
+.imgContainer{
+    display: inline-block;
+    position: relative;
+}
