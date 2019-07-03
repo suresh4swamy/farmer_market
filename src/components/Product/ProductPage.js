@@ -25,9 +25,7 @@ class ProductPage extends Component {
     render() {
         return (
             <React.Fragment>
-                <div >
-                    <ProductDetails />
-                </div >
+                {!this.state.showAddNewProduct && <div><ProductDetails /></div>}
                 {this.state.showAddNewProduct && <CreateNewProduct {...this.createNewProduct} />}
                 {!this.state.showAddNewProduct && <CreateNewProductBtn onClick={this.handleAddNewProductBtn} />}
             </React.Fragment>

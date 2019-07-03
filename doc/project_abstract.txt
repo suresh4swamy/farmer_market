@@ -43,7 +43,15 @@ PRODUCT PAGE: (login not required)
         1.  List of products.
         2.  Details of a product.
         3.  Create a product.
+            => Fields:  
+                        Product Title. Maximum 500 characters can be allowed.
+                        Product photos upload ([title], [description]). Maximum 5 photos can be allowed. Maximum 5 MB can be allowed.,
+                        Enter total product quantity size,
+                        cultivated type: [organic, trusted, non-organic, others],
+                        Available locations: [.....],
+                        Description of the product.
         4.  ....
+
 
 ORDER PAGE: (login required)
 ----------
