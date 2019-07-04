@@ -3,6 +3,7 @@ import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
 import personalDetailsDB from './personalDetailsDB';
+import uploadFilesDB from './uploadFilesDB';
 
 // const config = {
 //   apiKey: process.env.REACT_APP_API_KEY,
@@ -45,6 +46,9 @@ class Firebase {
 
     // Personal Details DB Api
     personalDetailsDB.call(this);
+
+    // File upload Api
+    uploadFilesDB.call(this);
   }
 
   // *** Auth API ***

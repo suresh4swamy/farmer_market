@@ -1,3 +1,7 @@
+
+.imgMainContainer {
+    margin: 20px 0;
+}
 .deleteIcon{
     font-size: 1.2em;
     position: absolute;
@@ -6,8 +10,33 @@
     background-color: rgba(255,255,255,0.5);
     padding: 10px;
 }
-
-.imgContainer{
-    display: inline-block;
+.imgListContainer {
     position: relative;
+    margin: 10px 0;
+    height: 100px;
+    max-width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+.imgListContainer>div {
+    position: relative;
+    display: flex;
+    height: 100%;
+}
+.imgContainer{
+    display: inline-flex;
+    position: relative;
+    height: 100%;
+    text-align: center;
+}
+.imgContainer img {
+    height: 100%;
+}
+.imageCaption {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background-color: rgba(255,255,255,0.5);
+    color: #000;
+    text-align: center;
 }
