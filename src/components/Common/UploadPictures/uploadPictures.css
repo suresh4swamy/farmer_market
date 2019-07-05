@@ -1,6 +1,7 @@
 
 .imgMainContainer {
     margin: 20px 0;
+    width: 100%;
 }
 .deleteIcon{
     font-size: 1.2em;
@@ -12,31 +13,64 @@
 }
 .imgListContainer {
     position: relative;
-    margin: 10px 0;
-    height: 100px;
-    max-width: 100%;
+    display: inline-block;
+    margin: 0;
+    width: 150px;
     overflow-y: hidden;
     overflow-x: auto;
+    vertical-align: top;
 }
 .imgListContainer>div {
     position: relative;
-    display: flex;
-    height: 100%;
 }
 .imgContainer{
-    display: inline-flex;
+    display: inline-block;
     position: relative;
-    height: 100%;
+    height: 100px;
     text-align: center;
+    cursor: pointer;
 }
 .imgContainer img {
     height: 100%;
 }
 .imageCaption {
     position: absolute;
-    width: 100%;
+    width: 0%;
+    height: 5px;
+    left: 0;
     bottom: 0;
     background-color: rgba(255,255,255,0.5);
     color: #000;
     text-align: center;
+    margin: 0;
+    background-color: var(--primary);
+}
+.imgBtnContainer {
+    margin: 10px 0;
+}
+.imgPopupContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vw;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.imageCropContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    min-height: 100px;
+    max-width: 100vw;
+    max-height: 100vh;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.ReactCrop {
+    width: 100%;
 }
