@@ -73,6 +73,8 @@ class UploadPicturesBase extends Component {
                     });
                 },
                 (path, id) => {
+                    // let img = new Image(path);
+                    // img.onload = () => {
                     this.setState({
                         uploadingImages: this.state.uploadingImages.filter((imgObj, index) => {
                             return "upload_" + index != id;
@@ -82,6 +84,7 @@ class UploadPicturesBase extends Component {
                     let data = [...this.props.data, { id: this.props.data.length, path }];
                     this.props.onChange(path, data);
                     this.setState({ images: data });
+                    // }
                 },
                 (error, id) => {
                     console.log(error);
