@@ -177,7 +177,7 @@ class UploadPicturesBase extends Component {
                 }
 
                 {this.state.src && (
-                    <div className="imgPopupContainer" style={{ width: this.state.srcWidth, height: this.state.srcHeight }}>
+                    <div className="imgPopupContainer">
                         <div className="imageCropContainer">
                             <ReactCrop
                                 src={this.state.src}
@@ -190,7 +190,7 @@ class UploadPicturesBase extends Component {
                     </div>
                 )}
             </div>
-        </React.Fragment>;
+        </React.Fragment>
     }
 
 }
