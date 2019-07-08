@@ -3,7 +3,8 @@ const uploadFilesDB = function () {
     const upload = (aId, aFolder, aFile, onUploadProgress, aSuccessCallBackFn, aFailureCallBackFn) => {
         const storageRef = this.storage.ref();
         const img = typeof aFolder === "string" ? storageRef.child(aFolder).child(aFile.name) : storageRef.child(aFile.name);
-        let uploadTask = img.put(aFile)
+        let uploadTask = aFile.base64 ? img.putString(aFile.base64.replace("data:image/jpeg;base64,", ""), 'base64', { contentType: 'image/jpeg' }) : img.put(aFile);
+        // console.log(aFile);
         uploadTask.then((snapshot) => {
             img.getDownloadURL().then((url) => {
                 aSuccessCallBackFn(url, aId);

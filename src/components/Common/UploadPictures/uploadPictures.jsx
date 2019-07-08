@@ -9,7 +9,13 @@ import "./uploadPictures.css";
 const UploadPictures = props => {
     return <UploadPicturesBase {...props} />
 }
-
+const cropDefault = {
+    unit: "%",
+    x: 10,
+    y: 10,
+    width: 80,
+    height: 80
+};
 class UploadPicturesBase extends Component {
 
     images = [];
@@ -19,15 +25,10 @@ class UploadPicturesBase extends Component {
         images: this.props.data,
         uploadingImages: [],
         src: null,
-        srcWidth: 0,
-        srcHeight: 0,
-        crop: {
-            unit: "%",
-            x: 10,
-            y: 10,
-            width: 80,
-            height: 80
-        }
+        srcFileName: "",
+        srcImageEl: null,
+        cropedImg: null,
+        crop: { ...cropDefault }
     }
 
     unique = 0;
@@ -38,8 +39,11 @@ class UploadPicturesBase extends Component {
         this.unique = 0;
     }
 
-    getUniqueId() {
+    generateUniqueId() {
         this.unique += 1;
+        return this.unique;
+    }
+    getUniqueId() {
         return this.unique;
     }
 
@@ -55,94 +59,131 @@ class UploadPicturesBase extends Component {
     handleDeleteImage = (evt) => {
 
     }
+    uploadingProgress = (progress, id) => {
+        this.setState({
+            uploadingImages: this.state.uploadingImages.map((imgObj, index) => {
+                if (imgObj.id == id) {
+                    imgObj.progress = Math.round(progress);
+                }
+                return imgObj;
+            })
+        });
+    }
+    uploadedSuccessful = (path, id) => {
+        let img = new Image();
+        img.src = path;
+        img.onload = () => {
+            console.log("Image loaded -- " + id);
+            this.setState({
+                uploadingImages: this.state.uploadingImages.filter((imgObj, index) => {
+                    return imgObj.id != id;
+                })
+            });
 
+            let data = [...this.props.data, { id: this.props.data.length, path }];
+            this.props.onChange(path, data);
+            this.setState({ images: data });
+        };
+    }
     handleChangeFile = (evt) => {
-
-
         if (evt.currentTarget.files && evt.currentTarget.files.length) {
             let file = evt.currentTarget.files[0];
-            let uploadId = this.getUniqueId();
-            console.log("Unique ID: " + uploadId);
-            let uploadingImages = [...this.state.uploadingImages, { id: "upload_" + uploadId, path: "" }];
-            this.setState({ uploadingImages });
-
             const reader = new FileReader();
             reader.onload = e => {
-                // $('#blah').attr('src', e.target.result);
-                let path = e.target.result;
-                this.setState({
-                    uploadingImages: this.state.uploadingImages.map((imgObj, index) => {
-                        if (imgObj.id == "upload_" + uploadId) {
-                            imgObj.path = e.target.result;
-                        }
-                        return imgObj;
-                    })
-                });
-                this.setState({ src: e.target.result });
+                let src = e.target.result;
+                this.setState({ src, srcFileName: file.name });
             }
             reader.readAsDataURL(evt.currentTarget.files[0]);
-
-            // this.props.firebase.uploadImage(
-            //     "upload_" + uploadId,
-            //     file,
-            //     (progress, id) => {
-            //         this.setState({
-            //             uploadingImages: this.state.uploadingImages.map((imgObj, index) => {
-            //                 if (imgObj.id == id) {
-            //                     imgObj.progress = Math.round(progress);
-            //                 }
-            //                 return imgObj;
-            //             })
-            //         });
-            //     },
-            //     (path, id) => {
-            //         let img = new Image();
-            //         img.src = path;
-            //         img.onload = () => {
-            //             console.log("Image loaded -- " + id);
-            //             this.setState({
-            //                 uploadingImages: this.state.uploadingImages.filter((imgObj, index) => {
-            //                     return imgObj.id != id;
-            //                 })
-            //             });
-
-            //             let data = [...this.props.data, { id: this.props.data.length, path }];
-            //             this.props.onChange(path, data);
-            //             this.setState({ images: data });
-            //         };
-            //     },
-            //     (error, id) => {
-            //         console.log(error);
-            //     }
-            // );
         }
+
 
     }
 
-    onSelectImageToCrop(index) {
-        this.setState({ src: this.state.uploadingImages[index].path });
+    onSelectImageToShow(index) {
+        console.log("Show image in planel.");
     }
 
     onImageLoaded = image => {
-        // const margin = 15;
-        // const crop = { x: margin, y: margin, width: image.offsetWidth - margin * 2, height: image.offsetHeight - margin * 2 };
-        // this.setState({ crop });
-
+        this.setState({ srcImageEl: image });
         console.log('onImageLoaded', image.offsetHeight);
-        if (image.offsetHeight > image.offsetWidth) {
-            this.setState({ srcWidth: "auto", srcHeight: image.offsetHeight });
-        } else {
-            this.setState({ srcWidth: image.offsetWidth, srcHeight: "auto" });
-        }
     }
-
     onCropComplete = crop => {
         console.log('onCropComplete', crop);
     }
-
     onCropChange = crop => {
         console.log('onCropChange', crop);
         this.setState({ crop });
+    }
+
+    handleCropOkBtn = async event => {
+        console.log("Crop ok button clicked.");
+
+        const croppedImage = await this.makeClientCrop();
+        // console.log(croppedImage);
+
+        let uploadId = this.generateUniqueId();
+        console.log("Unique ID: " + uploadId);
+        let uploadingImages = [...this.state.uploadingImages, { id: "upload_" + uploadId, path: croppedImage }];
+        this.setState({ uploadingImages, src: null, crop: { ...cropDefault } });
+
+
+        this.props.firebase.uploadImage(
+            "upload_" + uploadId,
+            { name: this.state.srcFileName.match(/^([\s\S]+)(?=\.)/g).join() + new Date().getTime() + ".jpeg", base64: croppedImage },
+            this.uploadingProgress,
+            this.uploadedSuccessful,
+            (error, id) => {
+                console.log(error);
+            }
+        );
+    }
+    handleCropRotateBtn = event => {
+        console.log("Crop Rotate button clicked. This feature is not added.");
+    }
+    handleCropCancelBtn = event => {
+        console.log("Crop Cancel button clicked.");
+        this.setState({ src: null, crop: { ...cropDefault } });
+    }
+
+    async makeClientCrop() {
+        const { srcImageEl, crop } = this.state;
+        if (srcImageEl && crop.width && crop.height) {
+            const croppedImageUrl = await this.getCroppedImg(
+                srcImageEl,
+                crop,
+                "cropped_image.jpeg"
+            );
+            return croppedImageUrl;
+        }
+    }
+
+    getCroppedImg(image, crop, fileName) {
+        const canvas = document.createElement("canvas");
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
+        canvas.width = crop.width;
+        canvas.height = crop.height;
+
+        console.log(image.naturalWidth, image.naturalHeight, image.offsetWidth, image.offsetHeight, crop.width, crop.height);
+
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(
+            image,
+            crop.x * scaleX,
+            crop.y * scaleY,
+            crop.width * scaleX,
+            crop.height * scaleY,
+            0,
+            0,
+            crop.width,
+            crop.height
+        );
+
+        return new Promise((resolve, reject) => {
+            resolve(canvas.toDataURL("image/jpeg"));
+            // resolve("asdf");
+        });
     }
 
     render() {
@@ -161,7 +202,7 @@ class UploadPicturesBase extends Component {
                         })}
                         {this.state.uploadingImages && this.state.uploadingImages.map((imgObj, index) => {
                             return (
-                                <div className="imgContainer" key={imgObj.id} onClick={() => this.onSelectImageToCrop(index)}>
+                                <div className="imgContainer" key={imgObj.id} onClick={() => this.onSelectImageToShow(index)}>
                                     <img src={imgObj.path} style={{ maxWidth: width, minHeight: height }} />
                                     <label className="imageCaption" style={{ width: imgObj.progress + "%" }}></label>
                                 </div>
@@ -186,6 +227,11 @@ class UploadPicturesBase extends Component {
                                 onComplete={this.onCropComplete}
                                 onChange={this.onCropChange}
                             />
+                        </div>
+                        <div className="imgCropBtnContainer">
+                            <button className="btn btn-primary" onClick={this.handleCropOkBtn}>OK</button>
+                            <button className="btn btn-warning" onClick={this.handleCropRotateBtn}>Rotate</button>
+                            <button className="btn btn-info" onClick={this.handleCropCancelBtn}>Cancel</button>
                         </div>
                     </div>
                 )}
