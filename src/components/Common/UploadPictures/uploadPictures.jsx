@@ -11,14 +11,14 @@ const UploadPictures = props => {
 
 class UploadPicturesBase extends Component {
 
-    images = [];
     fileUpload = React.createRef();
 
     state = {
         images: this.props.data,
         uploadingImages: [],
-        src: null,
-        srcFileName: ""
+        cropImage: null,
+        cropImageName: "",
+        currentImage: null
     }
     componentDidMount() {
         this.setState({ images: this.props.data });
@@ -26,8 +26,14 @@ class UploadPicturesBase extends Component {
     handleAddImages = (evt) => {
 
     }
-    handleDeleteImage = (evt) => {
-
+    handleDeleteImage = async (evt, imgObj) => {
+        evt.stopPropagation();
+        const id = await this.props.firebase.deleteImage(imgObj.id, imgObj.name);
+        const images = this.state.images.filter(imgObj => {
+            return imgObj.id != id;
+        });
+        const currentImage = null;
+        this.setState({ currentImage, images });
     }
     uploadingProgress = (progress, id) => {
         this.setState({
@@ -40,17 +46,19 @@ class UploadPicturesBase extends Component {
         });
     }
     uploadedSuccessful = (path, id) => {
+        let currentImgObj = null;
         let img = new Image();
         img.src = path;
         img.onload = () => {
             console.log("Image loaded -- " + id);
             this.setState({
                 uploadingImages: this.state.uploadingImages.filter((imgObj, index) => {
+                    currentImgObj = imgObj;
                     return imgObj.id != id;
                 })
             });
 
-            let data = [...this.props.data, { id: this.props.data.length, path }];
+            let data = [...this.props.data, { id: this.props.data.length, path, name: currentImgObj.name }];
             this.props.onChange(path, data);
             this.setState({ images: data });
         };
@@ -60,29 +68,28 @@ class UploadPicturesBase extends Component {
             let file = evt.currentTarget.files[0];
             const reader = new FileReader();
             reader.onload = e => {
-                let src = e.target.result;
-                this.setState({ src, srcFileName: file.name });
+                let cropImage = e.target.result;
+                this.setState({ cropImage, cropImageName: file.name });
             }
             reader.readAsDataURL(evt.currentTarget.files[0]);
         }
     }
-    onSelectImageToShow(index) {
-        console.log("Show image in planel.");
+    onSelectImageToShow(imagePath) {
+        this.setState({ currentImage: imagePath });
     }
     onCropDone = croppedImage => {
         let uploadId = new Date().getTime();
-        let uploadingImages = [...this.state.uploadingImages, { id: "upload_" + uploadId, path: croppedImage }];
-        this.setState({ uploadingImages, src: null });
+        let name = this.state.cropImageName.match(/^([\s\S]+)(?=\.)/g).join() + new Date().getTime() + ".jpeg";
+        let uploadingImages = [...this.state.uploadingImages, { id: "upload_" + uploadId, path: croppedImage, name }];
+        this.setState({ uploadingImages, cropImage: null });
 
-        this.props.firebase.uploadImage(
-            "upload_" + uploadId,
-            { name: this.state.srcFileName.match(/^([\s\S]+)(?=\.)/g).join() + new Date().getTime() + ".jpeg", base64: croppedImage },
-            this.uploadingProgress,
-            this.uploadedSuccessful,
-            (error, id) => {
-                console.log(error);
-            }
-        );
+        const uploadImage = this.props.firebase.uploadImage("upload_" + uploadId, { name, base64: croppedImage }, this.uploadingProgress);
+        uploadImage.then(data => {
+            this.uploadedSuccessful(data.url, data.id);
+        });
+        uploadImage.catch(error => {
+            console.log(error);
+        });
     }
     onCropCancel = () => {
         this.setState({ src: null });
@@ -95,15 +102,15 @@ class UploadPicturesBase extends Component {
                     <div>
                         {this.state.images && this.state.images.map((imgObj) => {
                             return (
-                                <div className="imgContainer" key={imgObj.id} >
+                                <div className="imgContainer" key={imgObj.id} onClick={() => this.onSelectImageToShow(imgObj.path)}>
                                     <img src={imgObj.path} style={{ maxWidth: width, minHeight: height }} />
-                                    <i className="fa fa-trash-o deleteIcon" style={{ "fontSize": "1.2em" }}></i>
+                                    <i className="fa fa-trash-o deleteIcon" style={{ "fontSize": "1.2em" }} onClick={event => this.handleDeleteImage(event, imgObj)}></i>
                                 </div>
                             )
                         })}
                         {this.state.uploadingImages && this.state.uploadingImages.map((imgObj, index) => {
                             return (
-                                <div className="imgContainer" key={imgObj.id} onClick={() => this.onSelectImageToShow(index)}>
+                                <div className="imgContainer" key={imgObj.id} onClick={() => this.onSelectImageToShow(imgObj.path)}>
                                     <img src={imgObj.path} style={{ maxWidth: width, minHeight: height }} />
                                     <label className="imageCaption" style={{ width: imgObj.progress + "%" }}></label>
                                 </div>
@@ -111,6 +118,11 @@ class UploadPicturesBase extends Component {
                         })}
                     </div>
                 </div>
+                {this.state.currentImage &&
+                    <div className="currentImageMax">
+                        <img src={this.state.currentImage} />
+                    </div>
+                }
                 {this.state.images.length + this.state.uploadingImages.length < 5 &&
                     <div className="imgBtnContainer">
                         <button className="btn btn-primary" onClick={() => { this.fileUpload.current.click(); }}>Add images</button>
@@ -118,7 +130,7 @@ class UploadPicturesBase extends Component {
                     </div>
                 }
 
-                <ImageCropper src={this.state.src} onCropDone={this.onCropDone} onCropCancel={this.onCropCancel} />
+                <ImageCropper src={this.state.cropImage} onCropDone={this.onCropDone} onCropCancel={this.onCropCancel} />
             </div>
         </React.Fragment>
     }

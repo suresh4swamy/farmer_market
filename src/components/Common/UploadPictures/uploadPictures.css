@@ -48,3 +48,9 @@
 .imgBtnContainer {
     margin: 10px 0;
 }
+
+.currentImageMax {
+    position: relative;
+    display: inline-block;
+    width: calc(100% - 160px);
+}

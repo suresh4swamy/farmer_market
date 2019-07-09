@@ -1,16 +1,12 @@
 
+// https://medium.com/@650egor/react-30-day-challenge-day-4-firebase-photo-upload-delete-f7c59d73ae36
+
 const uploadFilesDB = function () {
-    const upload = (aId, aFolder, aFile, onUploadProgress, aSuccessCallBackFn, aFailureCallBackFn) => {
+    const upload = (aId, aFolder, aFile, onUploadProgress) => {
         const storageRef = this.storage.ref();
         const img = typeof aFolder === "string" ? storageRef.child(aFolder).child(aFile.name) : storageRef.child(aFile.name);
         let uploadTask = aFile.base64 ? img.putString(aFile.base64.replace("data:image/jpeg;base64,", ""), 'base64', { contentType: 'image/jpeg' }) : img.put(aFile);
         // console.log(aFile);
-        uploadTask.then((snapshot) => {
-            img.getDownloadURL().then((url) => {
-                aSuccessCallBackFn(url, aId);
-            })
-        })
-
         uploadTask.on("state_changed", (snapshot) => {
             let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             onUploadProgress(progress, aId);
@@ -28,19 +24,42 @@ const uploadFilesDB = function () {
 
         }, (error) => {
             console.log("error uploading file");
-            aFailureCallBackFn && aFailureCallBackFn(error, aId);
+            // aFailureCallBackFn && aFailureCallBackFn(error, aId);
+        });
+
+        return new Promise((resolve, reject) => {
+            uploadTask.then((snapshot) => {
+                img.getDownloadURL().then((url) => {
+                    resolve({ url, id: aId });
+                })
+            });
+            uploadTask.catch(error => {
+                reject(error);
+            });
         });
 
     }
 
-    this.uploadFile = (aFile, aSuccessCallBackFn, aFailureCallBackFn) => {
-        let onUploadProgress = progress => {
-            console.log('Upload is ' + progress + '% done');
-        }
-        upload.call(this, null, null, aFile, onUploadProgress, aSuccessCallBackFn, aFailureCallBackFn);
+    const deleteImg = (aId, aFile) => {
+        console.log("images/" + aFile);
+        const storageRef = this.storage.ref();
+        let del = storageRef.child("images/" + aFile).delete();
+        return new Promise((resolve, reject) => {
+            resolve(aId);
+        });
     }
-    this.uploadImage = (aId, aFile, onUploadProgress, aSuccessCallBackFn, aFailureCallBackFn) => {
-        upload.call(this, aId, "images", aFile, onUploadProgress, aSuccessCallBackFn, aFailureCallBackFn);
+
+    this.uploadFile = (aFile, onUploadProgress) => {
+        // let onUploadProgress = progress => {
+        //     console.log('Upload is ' + progress + '% done');
+        // }
+        return upload.call(this, null, null, aFile, onUploadProgress);
+    }
+    this.uploadImage = (aId, aFile, onUploadProgress) => {
+        return upload.call(this, aId, "images", aFile, onUploadProgress);
+    }
+    this.deleteImage = (aId, aFile) => {
+        return deleteImg.call(this, aId, aFile);
     }
 }
 

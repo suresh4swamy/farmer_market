@@ -42,7 +42,7 @@ class ProfilePicture extends Component {
     }
 
     handleOnLoadComplete = (file, inputFiles) => {
-        this.props.firebase.uploadFile(file, this.props.onChange, this.handleOnUploadError);
+        this.props.firebase.uploadFile(file, this.props.onChange).catch(this.handleOnUploadError);
     }
 
     render() {
