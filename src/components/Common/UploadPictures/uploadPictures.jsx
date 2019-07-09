@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
 import { withFirebase } from '../../Firebase';
 
-import ReactCrop, { makeAspectCrop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
+import ImageCropper from '../ImageCropper';
 
 import "./uploadPictures.css";
 
 const UploadPictures = props => {
     return <UploadPicturesBase {...props} />
 }
-const cropDefault = {
-    unit: "%",
-    x: 10,
-    y: 10,
-    width: 80,
-    height: 80
-};
+
 class UploadPicturesBase extends Component {
 
     images = [];
@@ -25,37 +18,14 @@ class UploadPicturesBase extends Component {
         images: this.props.data,
         uploadingImages: [],
         src: null,
-        srcFileName: "",
-        srcImageEl: null,
-        cropedImg: null,
-        crop: { ...cropDefault }
+        srcFileName: ""
     }
-
-    unique = 0;
-
-    constructor(props) {
-        super(props);
-        // this.setState({ images: this.props.data });
-        this.unique = 0;
-    }
-
-    generateUniqueId() {
-        this.unique += 1;
-        return this.unique;
-    }
-    getUniqueId() {
-        return this.unique;
-    }
-
     componentDidMount() {
         this.setState({ images: this.props.data });
-        // this.images = this.props.data;
     }
-
     handleAddImages = (evt) => {
 
     }
-
     handleDeleteImage = (evt) => {
 
     }
@@ -95,37 +65,14 @@ class UploadPicturesBase extends Component {
             }
             reader.readAsDataURL(evt.currentTarget.files[0]);
         }
-
-
     }
-
     onSelectImageToShow(index) {
         console.log("Show image in planel.");
     }
-
-    onImageLoaded = image => {
-        this.setState({ srcImageEl: image });
-        console.log('onImageLoaded', image.offsetHeight);
-    }
-    onCropComplete = crop => {
-        console.log('onCropComplete', crop);
-    }
-    onCropChange = crop => {
-        console.log('onCropChange', crop);
-        this.setState({ crop });
-    }
-
-    handleCropOkBtn = async event => {
-        console.log("Crop ok button clicked.");
-
-        const croppedImage = await this.makeClientCrop();
-        // console.log(croppedImage);
-
-        let uploadId = this.generateUniqueId();
-        console.log("Unique ID: " + uploadId);
+    onCropDone = croppedImage => {
+        let uploadId = new Date().getTime();
         let uploadingImages = [...this.state.uploadingImages, { id: "upload_" + uploadId, path: croppedImage }];
-        this.setState({ uploadingImages, src: null, crop: { ...cropDefault } });
-
+        this.setState({ uploadingImages, src: null });
 
         this.props.firebase.uploadImage(
             "upload_" + uploadId,
@@ -137,55 +84,9 @@ class UploadPicturesBase extends Component {
             }
         );
     }
-    handleCropRotateBtn = event => {
-        console.log("Crop Rotate button clicked. This feature is not added.");
+    onCropCancel = () => {
+        this.setState({ src: null });
     }
-    handleCropCancelBtn = event => {
-        console.log("Crop Cancel button clicked.");
-        this.setState({ src: null, crop: { ...cropDefault } });
-    }
-
-    async makeClientCrop() {
-        const { srcImageEl, crop } = this.state;
-        if (srcImageEl && crop.width && crop.height) {
-            const croppedImageUrl = await this.getCroppedImg(
-                srcImageEl,
-                crop,
-                "cropped_image.jpeg"
-            );
-            return croppedImageUrl;
-        }
-    }
-
-    getCroppedImg(image, crop, fileName) {
-        const canvas = document.createElement("canvas");
-        const scaleX = image.naturalWidth / image.width;
-        const scaleY = image.naturalHeight / image.height;
-        canvas.width = crop.width;
-        canvas.height = crop.height;
-
-        console.log(image.naturalWidth, image.naturalHeight, image.offsetWidth, image.offsetHeight, crop.width, crop.height);
-
-        const ctx = canvas.getContext("2d");
-
-        ctx.drawImage(
-            image,
-            crop.x * scaleX,
-            crop.y * scaleY,
-            crop.width * scaleX,
-            crop.height * scaleY,
-            0,
-            0,
-            crop.width,
-            crop.height
-        );
-
-        return new Promise((resolve, reject) => {
-            resolve(canvas.toDataURL("image/jpeg"));
-            // resolve("asdf");
-        });
-    }
-
     render() {
         const { width, height } = this.props;
         return <React.Fragment>
@@ -217,24 +118,7 @@ class UploadPicturesBase extends Component {
                     </div>
                 }
 
-                {this.state.src && (
-                    <div className="imgPopupContainer">
-                        <div className="imageCropContainer">
-                            <ReactCrop
-                                src={this.state.src}
-                                crop={this.state.crop}
-                                onImageLoaded={this.onImageLoaded}
-                                onComplete={this.onCropComplete}
-                                onChange={this.onCropChange}
-                            />
-                        </div>
-                        <div className="imgCropBtnContainer">
-                            <button className="btn btn-primary" onClick={this.handleCropOkBtn}>OK</button>
-                            <button className="btn btn-warning" onClick={this.handleCropRotateBtn}>Rotate</button>
-                            <button className="btn btn-info" onClick={this.handleCropCancelBtn}>Cancel</button>
-                        </div>
-                    </div>
-                )}
+                <ImageCropper src={this.state.src} onCropDone={this.onCropDone} onCropCancel={this.onCropCancel} />
             </div>
         </React.Fragment>
     }
