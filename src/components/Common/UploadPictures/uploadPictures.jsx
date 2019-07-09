@@ -30,7 +30,7 @@ class UploadPicturesBase extends Component {
         evt.stopPropagation();
         const id = await this.props.firebase.deleteImage(imgObj.id, imgObj.name);
         const images = this.state.images.filter(imgObj => {
-            return imgObj.id != id;
+            return imgObj.id !== id;
         });
         const currentImage = null;
         this.setState({ currentImage, images });
@@ -38,7 +38,7 @@ class UploadPicturesBase extends Component {
     uploadingProgress = (progress, id) => {
         this.setState({
             uploadingImages: this.state.uploadingImages.map((imgObj, index) => {
-                if (imgObj.id == id) {
+                if (imgObj.id === id) {
                     imgObj.progress = Math.round(progress);
                 }
                 return imgObj;
@@ -54,7 +54,7 @@ class UploadPicturesBase extends Component {
             this.setState({
                 uploadingImages: this.state.uploadingImages.filter((imgObj, index) => {
                     currentImgObj = imgObj;
-                    return imgObj.id != id;
+                    return imgObj.id !== id;
                 })
             });
 

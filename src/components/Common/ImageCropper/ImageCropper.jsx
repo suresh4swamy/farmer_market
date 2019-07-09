@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactCrop, { makeAspectCrop } from 'react-image-crop';
+import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
 import './imageCropper.scss';

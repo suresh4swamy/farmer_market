@@ -8,8 +8,8 @@ import './product.scss';
 import TextInput from "../Common/textInput";
 import TextArea from "../Common/textArea";
 import DropDown from "../Common/dropDrown";
-import RadioOption from "../Common/radioOption";
-import ProfilePicture from "../Common/ProfilePic/profilePic";
+// import RadioOption from "../Common/radioOption";
+// import ProfilePicture from "../Common/ProfilePic/profilePic";
 
 
 import UploadPictures from '../Common/UploadPictures/uploadPictures';
@@ -90,7 +90,7 @@ class CreateNewProductBase extends Component {
         const { main_title, quantity, cul_type, available_location, description } = this.state.productDetail;
         const cul_type_list = [{ id: "0", name: "organic" }, { id: "1", name: "trusted" }, { id: "2", name: "non-organic" }, { id: "3", name: "others" }];
         const available_location_list = [{ id: "0", name: "Farm 1" }, { id: "1", name: "Farm 2" }, { id: "2", name: "Farm 3" }];
-        const profile_pic = "https://img.icons8.com/dusk/64/000000/user-male-skin-type-4.png";
+        // const profile_pic = "https://img.icons8.com/dusk/64/000000/user-male-skin-type-4.png";
         return (
             // <React.Fragment>
             //     <div>

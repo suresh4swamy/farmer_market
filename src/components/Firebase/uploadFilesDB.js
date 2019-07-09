@@ -28,7 +28,7 @@ const uploadFilesDB = function () {
         });
 
         return new Promise((resolve, reject) => {
-            uploadTask.then((snapshot) => {
+            uploadTask.then((snap) => {
                 img.getDownloadURL().then((url) => {
                     resolve({ url, id: aId });
                 })
@@ -43,7 +43,7 @@ const uploadFilesDB = function () {
     const deleteImg = (aId, aFile) => {
         console.log("images/" + aFile);
         const storageRef = this.storage.ref();
-        let del = storageRef.child("images/" + aFile).delete();
+        storageRef.child("images/" + aFile).delete();
         return new Promise((resolve, reject) => {
             resolve(aId);
         });

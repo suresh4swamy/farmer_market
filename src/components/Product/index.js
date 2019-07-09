@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import './product.scss';
 
 import ProductPage from './ProductPage';
