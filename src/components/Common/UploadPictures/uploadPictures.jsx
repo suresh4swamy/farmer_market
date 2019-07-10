@@ -103,7 +103,7 @@ class UploadPicturesBase extends Component {
                         {this.state.images && this.state.images.map((imgObj) => {
                             return (
                                 <div className="imgContainer" key={imgObj.id} onClick={() => this.onSelectImageToShow(imgObj.path)}>
-                                    <img src={imgObj.path} style={{ maxWidth: width, minHeight: height }} />
+                                    <img src={imgObj.path} style={{ maxWidth: width, minHeight: height }} alt="" />
                                     <i className="fa fa-trash-o deleteIcon" style={{ "fontSize": "1.2em" }} onClick={event => this.handleDeleteImage(event, imgObj)}></i>
                                 </div>
                             )
@@ -111,7 +111,7 @@ class UploadPicturesBase extends Component {
                         {this.state.uploadingImages && this.state.uploadingImages.map((imgObj, index) => {
                             return (
                                 <div className="imgContainer" key={imgObj.id} onClick={() => this.onSelectImageToShow(imgObj.path)}>
-                                    <img src={imgObj.path} style={{ maxWidth: width, minHeight: height }} />
+                                    <img src={imgObj.path} style={{ maxWidth: width, minHeight: height }} alt="" />
                                     <label className="imageCaption" style={{ width: imgObj.progress + "%" }}></label>
                                 </div>
                             )
@@ -120,7 +120,7 @@ class UploadPicturesBase extends Component {
                 </div>
                 {this.state.currentImage &&
                     <div className="currentImageMax">
-                        <img src={this.state.currentImage} />
+                        <img src={this.state.currentImage} alt="" />
                     </div>
                 }
                 {this.state.images.length + this.state.uploadingImages.length < 5 &&

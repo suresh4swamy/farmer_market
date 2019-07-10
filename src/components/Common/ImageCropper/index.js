@@ -1,3 +1,3 @@
-import ImageCropper from './imageCropper';
+import ImageCropper from './ImageCropper';
 
 export default ImageCropper;

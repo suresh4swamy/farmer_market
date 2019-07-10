@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
-import './imageCropper.scss';
+import './ImageCropper.scss';
 
 const cropDefault = {
     unit: "%",

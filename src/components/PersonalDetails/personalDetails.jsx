@@ -110,7 +110,7 @@ class PersonalDetails extends Component {
     }
 
     render() {
-        const { name, address, state, profileType, phone, email, password, password_retype, profile_pic } = this.state.userDetails;
+        const { name, address, state, profileType, phone, email, profile_pic } = this.state.userDetails;
         const { statesList, profileTypes } = this.state;
         // console.log(state)
         return (<form style={{ "maxWidth": "450px", "padding": "20px", "margin": "auto" }} onSubmit={this.handleSubmit}>
