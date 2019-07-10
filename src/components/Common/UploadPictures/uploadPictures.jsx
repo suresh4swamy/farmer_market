@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import { withFirebase } from '../../Firebase';
 
 import ImageCropper from '../ImageCropper';
@@ -18,7 +19,8 @@ class UploadPicturesBase extends Component {
         uploadingImages: [],
         cropImage: null,
         cropImageName: "",
-        currentImage: null
+        currentImage: null,
+        fileInputKey: 0
     }
     componentDidMount() {
         this.setState({ images: this.props.data });
@@ -59,12 +61,15 @@ class UploadPicturesBase extends Component {
             });
 
             let data = [...this.props.data, { id: this.props.data.length, path, name: currentImgObj.name }];
-            this.props.onChange(path, data);
+            typeof this.props.onChange === "function" && this.props.onChange(path, data);
             this.setState({ images: data });
         };
     }
     handleChangeFile = (evt) => {
-        if (evt.currentTarget.files && evt.currentTarget.files.length) {
+        this.setState({ fileInputKey: this.state.fileInputKey === 1 ? 0 : 1 });
+        const fileSize = evt.currentTarget.files[0].size / 1024;
+        const maxSize = 2048; // 2-MB
+        if (evt.currentTarget.files && evt.currentTarget.files.length && fileSize <= maxSize) {
             let file = evt.currentTarget.files[0];
             const reader = new FileReader();
             reader.onload = e => {
@@ -72,6 +77,9 @@ class UploadPicturesBase extends Component {
                 this.setState({ cropImage, cropImageName: file.name });
             }
             reader.readAsDataURL(evt.currentTarget.files[0]);
+            toast.success("Crop the image.");
+        } else {
+            toast.error("Image size should be within 2 MB.");
         }
     }
     onSelectImageToShow(imagePath) {
@@ -92,11 +100,11 @@ class UploadPicturesBase extends Component {
         });
     }
     onCropCancel = () => {
-        this.setState({ src: null });
+        this.setState({ cropImage: null });
     }
     render() {
         const { width, height } = this.props;
-        return <React.Fragment>
+        return (
             <div className="imgMainContainer">
                 <div className="imgListContainer">
                     <div>
@@ -124,15 +132,17 @@ class UploadPicturesBase extends Component {
                     </div>
                 }
                 {this.state.images.length + this.state.uploadingImages.length < 5 &&
+
                     <div className="imgBtnContainer">
                         <button className="btn btn-primary" onClick={() => { this.fileUpload.current.click(); }}>Add images</button>
-                        <input className="file-upload" ref={this.fileUpload} onChange={this.handleChangeFile} type="file" accept="image/*" />
+                        <input className="file-upload" ref={this.fileUpload} key={this.state.fileInputKey} onChange={this.handleChangeFile} type="file" accept="image/*" />
                     </div>
+
                 }
 
                 <ImageCropper src={this.state.cropImage} onCropDone={this.onCropDone} onCropCancel={this.onCropCancel} />
             </div>
-        </React.Fragment>
+        )
     }
 
 }

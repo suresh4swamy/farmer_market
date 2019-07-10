@@ -8,17 +8,20 @@ import './product.scss';
 import TextInput from "../Common/textInput";
 import TextArea from "../Common/textArea";
 import DropDown from "../Common/dropDrown";
-// import RadioOption from "../Common/radioOption";
+import RadioOption from "../Common/radioOption";
 // import ProfilePicture from "../Common/ProfilePic/profilePic";
 
 
 import UploadPictures from '../Common/UploadPictures/uploadPictures';
 
-const CreateNewProductBtn = props => (
-    <button className="btn btn-primary btn-circle btn-xl add-product-btn" onClick={props.onClick}>
-        <i className="fa fa-plus" aria-hidden="true"></i>
-    </button>
-);
+const CreateNewProductBtnBase = props => {
+    console.log(props);
+    return (
+        <button className="btn btn-primary btn-circle btn-xl add-product-btn" onClick={props.onClick}>
+            <i className="fa fa-plus" aria-hidden="true"></i>
+        </button>
+    );
+};
 
 const CreateNewProduct = props => {
     return <CreateNewProductBase {...props} />
@@ -26,15 +29,11 @@ const CreateNewProduct = props => {
 
 class CreateNewProductBase extends Component {
     state = {
-        staticImages: [
-            // { id: 1, path: "https://firebasestorage.googleapis.com/v0/b/farmersaleplatfo-1561457656175.appspot.com/o/images%2Fanimal_rip_01.jpg?alt=media&token=dd206537-231d-4ec9-8a81-f537b4b1308c" },
-            // { id: 2, path: "https://firebasestorage.googleapis.com/v0/b/farmersaleplatfo-1561457656175.appspot.com/o/images%2Fanimal_rip_02.jpg?alt=media&token=4c63d53d-f38a-446c-bc8c-a34d267c77d0" },
-            // { id: 3, path: "https://firebasestorage.googleapis.com/v0/b/farmersaleplatfo-1561457656175.appspot.com/o/images%2Fanimal_rip_03.jpg?alt=media&token=5969c2a8-b249-4caf-ae0f-38e223ab6364" },
-            // { id: 4, path: "https://firebasestorage.googleapis.com/v0/b/farmersaleplatfo-1561457656175.appspot.com/o/images%2Fanimal_rip_04.jpg?alt=media&token=4bcc1119-619d-4264-8dd0-c9d4561ea063" }
-        ],
+        staticImages: [],
         productDetail: {
             main_title: "",
             quantity: "3",
+            price: "0",
             cul_type: "1",
             available_location: "village name",
             description: "",
@@ -87,36 +86,23 @@ class CreateNewProductBase extends Component {
     }
 
     render() {
-        const { main_title, quantity, cul_type, available_location, description } = this.state.productDetail;
+        const { main_title, quantity, price, cul_type, available_location, description } = this.state.productDetail;
         const cul_type_list = [{ id: "0", name: "organic" }, { id: "1", name: "trusted" }, { id: "2", name: "non-organic" }, { id: "3", name: "others" }];
         const available_location_list = [{ id: "0", name: "Farm 1" }, { id: "1", name: "Farm 2" }, { id: "2", name: "Farm 3" }];
-        // const profile_pic = "https://img.icons8.com/dusk/64/000000/user-male-skin-type-4.png";
         return (
-            // <React.Fragment>
-            //     <div>
-            //         Add new product.
-            //     </div>
-            //     <div>
-            //         <button type="button" className="btn btn-info btn-circle btn-xl" onClick={this.handleCreateBtn}>
-            //             <i className="fa fa-check"></i>
-            //         </button>
-            //         <button type="button" className="btn btn-warning btn-circle btn-xl" onClick={this.handleCancelBtn}>
-            //             <i className="fa fa-times"></i>
-            //         </button>
-            //     </div>
-            // </React.Fragment>
-
-            <form style={{ maxWidth: "768px", margin: "0 auto" }} onSubmit={this.handleSubmit}>
+            <form className="create-new-product" style={{ maxWidth: "768px", margin: "0 auto" }} onSubmit={this.handleSubmit}>
                 <div className="xl-col-12">
-                    {/* <ProfilePicture src={profile_pic} onChange={this.handleProfilePicChange} firebase={this.props.firebase} /> */}
                     <UploadPictures data={this.state.staticImages} onChange={this.handleUploadChange}></UploadPictures>
                 </div>
                 <div className="xl-col-12">
-                    <TextInput name="main_title" label="Product Title" value={main_title} onChange={this.handleChange} />
-                    <TextArea name="description" label="Product Description" value={description} onChange={this.handleChange} />
-                    <TextInput name="quantity" type="number" label="Product Quantity" min="1" value={quantity} onChange={this.handleChange} />
-                    <DropDown name="cul_type" label="Cultivated Type" value={cul_type} data={cul_type_list} onChange={this.handleChange} />
-                    <DropDown name="available_location" label="Available Locations" value={available_location} data={available_location_list} onChange={this.handleChange} />
+                    <TextInput name="main_title" label="Title" value={main_title} onChange={this.handleChange} />
+                    <TextArea name="description" label="Description" value={description} onChange={this.handleChange} />
+                    <TextInput name="quantity" type="number" label="Quantity" min="1" value={quantity} onChange={this.handleChange} />
+                    <TextInput name="price" type="number" label="Price Per Quantity" min="1" value={price} onChange={this.handleChange} />
+                    <RadioOption name="cul_type" label="Cultivated Type" value={cul_type} data={cul_type_list} onChange={this.handleChange} />
+                    <RadioOption name="available_location" label="Available Locations" value={available_location} data={available_location_list} onChange={this.handleChange} />
+                    {/* <DropDown name="cul_type" label="Cultivated Type" value={cul_type} data={cul_type_list} onChange={this.handleChange} />
+                    <DropDown name="available_location" label="Available Locations" value={available_location} data={available_location_list} onChange={this.handleChange} /> */}
                     {/* <UploadPictures data={this.staticImages}></UploadPictures> */}
                 </div>
                 <div className="text-center">
@@ -134,7 +120,7 @@ class CreateNewProductBase extends Component {
 
 
 const condition = authUser => !!authUser;
-
+const CreateNewProductBtn = compose(withAuthorization(condition))(CreateNewProductBtnBase);
 export { CreateNewProductBtn };
 export default compose(
     withEmailVerification,

@@ -12,12 +12,6 @@ import { withFirebase } from '../Firebase';
 
 class PersonalDetails extends Component {
     profilePic = React.createRef();
-    staticImages = [
-        { id: 1, path: "https://firebasestorage.googleapis.com/v0/b/farmersaleplatfo-1561457656175.appspot.com/o/bps.PNG?alt=media&token=16fc9a88-ab9d-4e9f-9ff0-c81c328369dd" },
-        { id: 2, path: "https://firebasestorage.googleapis.com/v0/b/farmersaleplatfo-1561457656175.appspot.com/o/1936697230_2b4ee42fa4_z.jpg?alt=media&token=64b82ae3-96d0-4cd1-8b82-118d06be9163" },
-        { id: 3, path: "https://firebasestorage.googleapis.com/v0/b/farmersaleplatfo-1561457656175.appspot.com/o/cancel_ongoing.PNG?alt=media&token=3b7e1715-8b62-42cf-bca6-5a1616933c18" },
-        { id: 4, path: "https://firebasestorage.googleapis.com/v0/b/farmersaleplatfo-1561457656175.appspot.com/o/tneb.PNG?alt=media&token=d562e37e-eecb-4e59-9244-5734946e87b5" }
-    ]
     state = {
         userDetails: {
             name: "",
@@ -126,8 +120,6 @@ class PersonalDetails extends Component {
             <button type="submit" className="btn btn-primary">Save</button>
 
             <br /><br /><br />
-
-            <UploadPictures data={this.staticImages}></UploadPictures>
         </form>);
     }
 }

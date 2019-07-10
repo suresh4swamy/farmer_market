@@ -21,6 +21,11 @@ import ProductPage from '../Product';
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
+
 // $.something();
 const App = () => (
   <Router>

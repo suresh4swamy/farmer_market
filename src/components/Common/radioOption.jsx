@@ -13,9 +13,9 @@ class RadioOption extends Component {
     }
 
     render() {
-        const { name } = this.props;
+        const { name, label } = this.props;
         return (<div className="form-group">
-            <label htmlFor={name} style={{ "display": "block" }}> Profile Type</label>
+            <label htmlFor={name} style={{ "display": "block" }}> {label ? label : "Profile Type"}</label>
             {this.getOptions()}
         </div>);
     }

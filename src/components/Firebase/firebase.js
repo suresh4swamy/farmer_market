@@ -25,6 +25,8 @@ const config = {
 
 class Firebase {
   constructor() {
+
+
     app.initializeApp(config);
 
     /* Helper */
@@ -38,15 +40,20 @@ class Firebase {
     this.db = app.database();
     this.storage = app.storage();
 
+    // include functions of external files.
+    this.attachOtherDB();
+
     /* Social Sign In Method Provider */
 
     this.googleProvider = new app.auth.GoogleAuthProvider();
     this.facebookProvider = new app.auth.FacebookAuthProvider();
     this.twitterProvider = new app.auth.TwitterAuthProvider();
+  }
 
-    // Personal Details DB Api
+  // Append other DB files to this instance
+  attachOtherDB() {
+    // User personal Details DB Api
     personalDetailsDB.call(this);
-
     // File upload Api
     uploadFilesDB.call(this);
   }
@@ -112,7 +119,6 @@ class Firebase {
         fallback();
       }
     });
-
   // *** User API ***
 
   user = uid => this.db.ref(`users/${uid}`);
@@ -120,7 +126,6 @@ class Firebase {
   users = () => this.db.ref('users');
 
   // *** Message API ***
-
   message = uid => this.db.ref(`messages/${uid}`);
 
   messages = () => this.db.ref('messages');
