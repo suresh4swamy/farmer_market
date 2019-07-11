@@ -89,12 +89,12 @@ class Firebase {
 
   // *** Merge Auth and DB User API *** //
 
-  onAuthUserListener = (next, fallback) =>
-    this.auth.onAuthStateChanged(authUser => {
+  onAuthUserListener = (next, fallback) => {
+    console.error("onAuthStateChange");
+    return this.auth.onAuthStateChanged(authUser => {
       if (authUser) {
         this.user(authUser.uid)
-          .once('value')
-          .then(snapshot => {
+          .on('value', snapshot => {
             const dbUser = snapshot.val();
 
             // // default empty roles
@@ -119,6 +119,7 @@ class Firebase {
         fallback();
       }
     });
+  }
   // *** User API ***
 
   user = uid => this.db.ref(`users/${uid}`);

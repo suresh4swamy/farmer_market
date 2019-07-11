@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './product.scss';
-
 import ProductDetails from './ProductDetails';
 import CreateNewProduct, { CreateNewProductBtn } from './CreateNewProduct';
 
@@ -28,6 +27,7 @@ class ProductPage extends Component {
                 {!this.state.showAddNewProduct && <div><ProductDetails /></div>}
                 {this.state.showAddNewProduct && <CreateNewProduct {...this.createNewProduct} />}
                 {!this.state.showAddNewProduct && <CreateNewProductBtn onClick={this.handleAddNewProductBtn} />}
+
             </div>
         );
     };

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import TextInput from "../Common/textInput";
-import DropDown from "../Common/dropDrown";
-import RadioOption from "../Common/radioOption";
+import { TextInput, DropDown, RadioOption } from "../Common/FormElements";
 import ProfilePicture from "../Common/ProfilePic/profilePic";
 import { compose } from 'recompose';
 
-import UploadPictures from '../Common/UploadPictures/uploadPictures';
+// import UploadPictures from '../Common/UploadPictures/uploadPictures';
 
 import { withAuthorization, withEmailVerification } from '../Session';
 import { withFirebase } from '../Firebase';

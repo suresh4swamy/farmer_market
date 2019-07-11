@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { readFileFromInputElement } from "../readFile";
+import { readFileFromInputElement } from "../FormElements";
 import "./profilePic.css";
 
 class ProfilePicture extends Component {
