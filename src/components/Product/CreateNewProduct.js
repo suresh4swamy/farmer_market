@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import { AuthUserContext, withAuthorization, withEmailVerification } from '../Session';
+import { withAuthorization, withEmailVerification } from '../Session';
 // import { withFirebase } from '../Firebase';
 
 import './product.scss';
@@ -11,15 +11,44 @@ import { TextInput, TextArea, DropDown, RadioOption } from "../Common/FormElemen
 
 import UploadPictures from '../Common/UploadPictures/uploadPictures';
 
-const CreateNewProductBtnBase = props => (
-    <button className="btn btn-primary btn-circle btn-xl add-product-btn" onClick={props.onClick}>
-        <i className="fa fa-plus" aria-hidden="true"></i>
-    </button>
-);
+const _CreateNewProductBtn = props => {
+    const { authUser } = props;
+    console.log(authUser);
+    return (
+        <React.Fragment>
+            {
+                authUser && authUser.profileType && authUser.profileType.toLowerCase() === "seller" ?
+                    <CreateNewProductBtnBase />
+                    :
+                    null
+            }
+        </React.Fragment>
+    )
+}
 
-const CreateNewProduct = props => (
-    <CreateNewProductBase {...props} />
-);
+class CreateNewProductBtnBase extends Component {
+    render() {
+        return (
+            <button className="btn btn-primary btn-circle btn-xl add-product-btn" onClick={this.props.onClick}>
+                <i className="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        );
+    }
+}
+
+const CreateNewProduct = props => {
+    const { authUser } = props;
+    return (
+        <React.Fragment>
+            {
+                authUser && authUser.profileType && authUser.profileType.toLowerCase() === "seller" ?
+                    <CreateNewProductBase {...props} />
+                    :
+                    null
+            }
+        </React.Fragment>
+    )
+}
 
 class CreateNewProductBase extends Component {
     state = {
@@ -112,13 +141,10 @@ class CreateNewProductBase extends Component {
 }
 
 
-const condition = authUser => authUser && authUser.profileType && authUser.profileType.toLowerCase() === "seller";
+// const condition = authUser => authUser && authUser.profileType && authUser.profileType.toLowerCase() === "seller";
+const condition = authUser => !!authUser;
 
-const CreateNewProductBtn = compose(withEmailVerification, withAuthorization(condition))(CreateNewProductBtn);
+const CreateNewProductBtn = compose(withAuthorization(condition))(_CreateNewProductBtn);
 
-export { CreateNewProductBtn }
+export { CreateNewProductBtn };
 export default compose(withEmailVerification, withAuthorization(condition))(CreateNewProduct);
-
-// const CreateNewProductBtn = CreateNewProductBtnBase;
-// export { CreateNewProductBtn }
-// export default CreateNewProduct

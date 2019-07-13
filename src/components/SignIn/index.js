@@ -10,70 +10,39 @@ import * as ROUTES from '../../constants/routes';
 
 const bg = require('../../assests/images/nature/001.jpg');
 
-const SignInPage = () => (
-  // <div>
-  //   <h1>SignIn</h1>
-  //   <SignInForm />
-  //   <SignInGoogle />
-  //   <SignInFacebook />
-  //   <SignInTwitter />
-  //   <PasswordForgetLink />
-  //   <SignUpLink />
-  // </div>
-
-  <div className="container" style={{ backgroundImage: `url(${bg})` }}>
-    <div className="d-flex justify-content-center h-100">
-      <div className="card">
-        <div className="card-header">
-          <h3>Sign In</h3>
-          <div className="d-flex justify-content-end social_icon">
-            {/* <span><i className="fab fa-facebook-square"></i></span> */}
-            {/* <span><i className="fab fa-google-plus-square"></i></span> */}
-            {/* <span><i className="fab fa-twitter-square"></i></span> */}
-            <SignInFacebook />
-            <SignInGoogle />
-            <SignInTwitter />
+class SignInPage extends Component {
+  componentWillMount() {
+    const authUser = this.props.firebase.getAuthUser();
+    if (authUser) {
+      this.props.history.push(ROUTES.HOME);
+    }
+  }
+  render() {
+    return (
+      <div className="container" style={{ backgroundImage: `url(${bg})` }}>
+        <div className="d-flex justify-content-center h-100">
+          <div className="card">
+            <div className="card-header">
+              <h3>Sign In</h3>
+              <div className="d-flex justify-content-end social_icon">
+                <SignInFacebook />
+                <SignInGoogle />
+                <SignInTwitter />
+              </div>
+            </div>
+            <div className="card-body">
+              <SignInForm />
+            </div>
+            <div className="card-footer">
+              <SignUpLink />
+              <PasswordForgetLink />
+            </div>
           </div>
         </div>
-        <div className="card-body">
-          <SignInForm />
-          {/* <form>
-            <div className="input-group form-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text"><i className="fas fa-user"></i></span>
-              </div>
-              <input type="text" className="form-control" placeholder="username" />
-
-            </div>
-            <div className="input-group form-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text"><i className="fas fa-key"></i></span>
-              </div>
-              <input type="password" className="form-control" placeholder="password" />
-            </div>
-            <div className="row align-items-center remember">
-              <input type="checkbox" />
-              Remember Me
-            </div>
-            <div className="form-group">
-              <input type="submit" value="Login" className="btn float-right login_btn" />
-            </div>
-          </form> */}
-        </div>
-        <div className="card-footer">
-          <SignUpLink />
-          {/* <div className="d-flex justify-content-center links">
-            Don't have an account?<a href="#">Sign Up</a>
-          </div> */}
-          {/* <div className="d-flex justify-content-center">
-            <a href="#">Forgot your password?</a>
-          </div> */}
-          <PasswordForgetLink />
-        </div>
       </div>
-    </div>
-  </div>
-);
+    )
+  }
+};
 
 const INITIAL_STATE = {
   email: '',
@@ -348,6 +317,6 @@ const SignInTwitter = compose(
   withFirebase,
 )(SignInTwitterBase);
 
-export default SignInPage;
+export default withFirebase(SignInPage);
 
 export { SignInForm, SignInGoogle, SignInFacebook, SignInTwitter };

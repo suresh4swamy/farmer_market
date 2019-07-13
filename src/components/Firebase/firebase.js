@@ -26,7 +26,6 @@ const config = {
 class Firebase {
   constructor() {
 
-
     app.initializeApp(config);
 
     /* Helper */
@@ -41,7 +40,7 @@ class Firebase {
     this.storage = app.storage();
 
     // include functions of external files.
-    this.attachOtherDB();
+    this.attachOtherCollection();
 
     /* Social Sign In Method Provider */
 
@@ -50,8 +49,8 @@ class Firebase {
     this.twitterProvider = new app.auth.TwitterAuthProvider();
   }
 
-  // Append other DB files to this instance
-  attachOtherDB() {
+  // Append other Collection to this instance
+  attachOtherCollection() {
     // User personal Details DB Api
     personalDetailsDB.call(this);
     // File upload Api
@@ -87,6 +86,20 @@ class Firebase {
   doPasswordUpdate = password =>
     this.auth.currentUser.updatePassword(password)
 
+
+  getAuthUser = () => {
+    const authUser = JSON.parse(localStorage.getItem('authUser'));
+    return authUser;
+  }
+
+  setAuthUser = authUser => {
+    if (authUser) {
+      localStorage.setItem('authUser', JSON.stringify(authUser));
+    } else {
+      localStorage.removeItem('authUser');
+    }
+  }
+
   // *** Merge Auth and DB User API *** //
 
   onAuthUserListener = (next, fallback) => {
@@ -112,7 +125,6 @@ class Firebase {
             };
 
             console.log(authUser);
-
             next(authUser);
           });
       } else {

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
 
 import {
@@ -29,18 +31,28 @@ const SIGN_IN_METHODS = [
   },
 ];
 
-const AccountPage = () => (
-  <AuthUserContext.Consumer>
-    {authUser => (
-      <div>
-        <h1>Account: {authUser.email}</h1>
-        <PasswordForgetForm />
-        <PasswordChangeForm />
-        <LoginManagement authUser={authUser} />
-      </div>
-    )}
-  </AuthUserContext.Consumer>
-);
+class AccountPage extends Component {
+  componentWillUnmount() {
+    const authUser = this.props.firebase.getAuthUser();
+    if (!authUser) {
+      this.props.history.push(ROUTES.SIGN_IN);
+    }
+  }
+  render() {
+    return (
+      <AuthUserContext.Consumer>
+        {authUser => (
+          <div>
+            <h1>Account: {authUser.email}</h1>
+            <PasswordForgetForm />
+            <PasswordChangeForm />
+            <LoginManagement authUser={authUser} />
+          </div>
+        )}
+      </AuthUserContext.Consumer>
+    );
+  }
+}
 
 class LoginManagementBase extends Component {
   constructor(props) {
@@ -226,6 +238,7 @@ const LoginManagement = withFirebase(LoginManagementBase);
 const condition = authUser => !!authUser;
 
 export default compose(
+  withRouter,
   withEmailVerification,
   withAuthorization(condition),
 )(AccountPage);

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
+
 import { TextInput, DropDown, RadioOption } from "../Common/FormElements";
 import ProfilePicture from "../Common/ProfilePic/profilePic";
 import { compose } from 'recompose';
@@ -74,6 +77,13 @@ class PersonalDetails extends Component {
         this.getProfile();
     }
 
+    componentWillUnmount() {
+        const authUser = this.props.firebase.getAuthUser();
+        if (!authUser) {
+            this.props.history.push(ROUTES.SIGN_IN);
+        }
+    }
+
     getProfile = () => {
         this.props.firebase.getProfile(data => {
             const userDetails = data;
@@ -129,6 +139,7 @@ class PersonalDetails extends Component {
 const condition = authUser => !!authUser;
 
 export default compose(
+    withRouter,
     withEmailVerification,
     withAuthorization(condition),
 )(withFirebase(PersonalDetails));
