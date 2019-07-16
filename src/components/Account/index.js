@@ -32,12 +32,6 @@ const SIGN_IN_METHODS = [
 ];
 
 class AccountPage extends Component {
-  componentWillUnmount() {
-    const authUser = this.props.firebase.getAuthUser();
-    if (!authUser) {
-      this.props.history.push(ROUTES.SIGN_IN);
-    }
-  }
   render() {
     return (
       <AuthUserContext.Consumer>

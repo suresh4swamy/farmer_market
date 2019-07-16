@@ -77,17 +77,12 @@ class PersonalDetails extends Component {
         this.getProfile();
     }
 
-    componentWillUnmount() {
-        const authUser = this.props.firebase.getAuthUser();
-        if (!authUser) {
-            this.props.history.push(ROUTES.SIGN_IN);
-        }
-    }
-
     getProfile = () => {
         this.props.firebase.getProfile(data => {
-            const userDetails = data;
-            this.setState({ userDetails });
+            for (let key in data) {
+                this.state.userDetails[key] = data[key];
+            }
+            this.setState({ userDetails: this.state.userDetails });
         });
     }
 
@@ -114,7 +109,7 @@ class PersonalDetails extends Component {
     render() {
         const { name, address, state, profileType, phone, email, profile_pic } = this.state.userDetails;
         const { statesList, profileTypes } = this.state;
-        // console.log(state)
+        console.log(this.state)
         return (<form style={{ "maxWidth": "450px", "padding": "20px", "margin": "auto" }} onSubmit={this.handleSubmit}>
             <ProfilePicture src={profile_pic} onChange={this.handleProfilePicChange} firebase={this.props.firebase} />
             <TextInput name="name" label="Name" value={name} onChange={this.handleChange} />

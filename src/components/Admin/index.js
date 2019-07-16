@@ -8,12 +8,6 @@ import * as ROLES from '../../constants/roles';
 import * as ROUTES from '../../constants/routes';
 
 class AdminPage extends Component {
-  componentWillUnmount() {
-    const authUser = this.props.firebase.getAuthUser();
-    if (!authUser) {
-      this.props.history.push(ROUTES.SIGN_IN);
-    }
-  }
   render() {
     return (
       <div>
@@ -35,5 +29,5 @@ const condition = authUser =>
 export default compose(
   withRouter,
   withEmailVerification,
-  withAuthorization(condition),
+  withAuthorization(condition, ROUTES.LANDING),
 )(AdminPage);

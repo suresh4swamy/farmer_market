@@ -1,24 +1,17 @@
 import React from 'react';
 import { compose } from 'recompose';
 
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 
 import AuthUserContext from './context';
 import { withFirebase } from '../Firebase';
 
-const withAuthorization = condition => Component => {
+const withAuthorization = (condition, redirectTo) => Component => {
   class WithAuthorization extends React.Component {
 
     componentDidMount() {
 
-    }
-
-    componentWillUnmount() {
-      const authUser = this.props.firebase.getAuthUser();
-      if (!authUser) {
-        this.props.history.push(ROUTES.SIGN_IN);
-      }
     }
 
     render() {
@@ -26,7 +19,7 @@ const withAuthorization = condition => Component => {
         <AuthUserContext.Consumer>
           {authUser =>
             <React.Fragment>
-              {authUser && condition(authUser) ? <Component {...this.props} authUser={authUser} /> : null}
+              {authUser && condition(authUser) ? <Component {...this.props} authUser={authUser} /> : redirectTo ? <Redirect to={redirectTo} /> : null}
             </React.Fragment>
           }
         </AuthUserContext.Consumer>

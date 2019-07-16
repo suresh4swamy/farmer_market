@@ -37,17 +37,13 @@ const App = () => (
 			<Switch>
 				<Route path={ROUTES.SIGN_UP} component={SignUpPage} />
 				<Route path={ROUTES.SIGN_IN} component={SignInPage} />
-				<Route
-					path={ROUTES.PASSWORD_FORGET}
-					component={PasswordForgetPage}
-				/>
+				<Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
 				<PrivateRoute path={ROUTES.HOME} component={HomePage} />
-				<Route path={ROUTES.ACCOUNT} component={AccountPage} />
-				<Route path={ROUTES.ADMIN} component={AdminPage} />
-				<Route path={ROUTES.PERSONAL_DETAILS} component={PersonalDetails} />
+				<PrivateRoute path={ROUTES.ACCOUNT} component={AccountPage} />
+				<PrivateRoute path={ROUTES.ADMIN} component={AdminPage} />
+				<PrivateRoute path={ROUTES.PERSONAL_DETAILS} component={PersonalDetails} />
 				<Route path={ROUTES.PRODUCT} component={ProductPage} />
 				<Route exact path={ROUTES.LANDING} component={LandingPage} />
-				{/* <PrivateRoute exact path={ROUTES.LANDING} component={LandingPage} /> */}
 			</Switch>
 		</React.Fragment>
 	</Router>

@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Landing = () => (
-  <div>
+const Landing = () => {
+  console.log("Landing is called.");
+  return <div>
     <h1>Landing</h1>
   </div>
-);
+};
 
 export default Landing;

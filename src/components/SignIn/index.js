@@ -28,17 +28,16 @@ class SignInPage extends Component {
 	componentWillMount() {
 		const authUser = this.props.firebase.getAuthUser();
 		if (authUser) {
-			this.props.history.push(ROUTES.HOME);
+			this.props.history.push(ROUTES.LANDING);
 		}
 	}
 	authorizedRender(from) {
-		return <Redirect to={from ? from.pathname : ROUTES.HOME} />
+		return <Redirect to={from ? from.pathname : ROUTES.LANDING} />
 	}
 	requestSent = () => {
 		this.setState({ loading: true });
 	}
-	signInRender(from) {
-		console.log(from)
+	signInRender() {
 		return (
 			<div className="container" style={{ backgroundImage: `url(${bg})` }}>
 				<div className="d-flex justify-content-center h-100">
@@ -52,7 +51,7 @@ class SignInPage extends Component {
 							</div>
 						</div>
 						<div className="card-body">
-							<SignInForm requestSent={this.requestSent} redirectTo={from ? from.pathname : ROUTES.HOME} />
+							<SignInForm requestSent={this.requestSent} />
 						</div>
 						<div className="card-footer">
 							<SignUpLink />
@@ -73,7 +72,7 @@ class SignInPage extends Component {
 						if (authUser) {
 							return this.authorizedRender(from)
 						} else {
-							return this.signInRender(from)
+							return this.signInRender()
 						}
 					}
 				}
@@ -112,7 +111,6 @@ class SignInFormBase extends Component {
 			.doSignInWithEmailAndPassword(email, password)
 			.then(() => {
 				this.setState({ ...INITIAL_STATE });
-				this.props.history.push(this.props.redirectTo);
 			})
 			.catch(error => {
 				this.setState({ error });
