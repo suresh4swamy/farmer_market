@@ -5,6 +5,7 @@ import * as ROUTES from '../../constants/routes';
 import { TextInput, DropDown, RadioOption } from "../Common/FormElements";
 import ProfilePicture from "../Common/ProfilePic/profilePic";
 import { compose } from 'recompose';
+import { toast } from 'react-toastify';
 
 // import UploadPictures from '../Common/UploadPictures/uploadPictures';
 
@@ -87,7 +88,13 @@ class PersonalDetails extends Component {
     }
 
     handleSubmit = (evt) => {
-        this.props.firebase.doProfileUpdate(this.state.userDetails);
+        this.props.firebase.doProfileUpdate(this.state.userDetails)
+            .then(() => {
+                toast.success("Transaction Successful.");
+            })
+            .catch(error => {
+                toast.error("Transaction Failed.");
+            });
         evt.preventDefault();
 
     }

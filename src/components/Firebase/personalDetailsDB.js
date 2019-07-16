@@ -10,7 +10,7 @@ const personalDetailsDB = function () {
     }
 
     this.doProfileUpdate = (data) => {
-        this.user(this.auth.currentUser.uid).update({ ...data });
+        return this.user(this.auth.currentUser.uid).update({ ...data });
     }
 };
 
