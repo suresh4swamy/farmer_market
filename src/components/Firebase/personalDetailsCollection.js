@@ -1,5 +1,5 @@
 
-const personalDetailsDB = function () {
+const personalDetailsCollection = function () {
 
     this.getProfile = callback => {
         if (this.auth.currentUser) {
@@ -14,4 +14,4 @@ const personalDetailsDB = function () {
     }
 };
 
-export default personalDetailsDB;
+export default personalDetailsCollection;

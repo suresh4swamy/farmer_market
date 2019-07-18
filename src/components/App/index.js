@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 // import $ from 'jquery';
 // import 'react-bootstrap';
@@ -44,6 +44,7 @@ const App = () => (
 				<PrivateRoute path={ROUTES.PERSONAL_DETAILS} component={PersonalDetails} />
 				<Route path={ROUTES.PRODUCT} component={ProductPage} />
 				<Route exact path={ROUTES.LANDING} component={LandingPage} />
+				<Route render={() => <Redirect to={ROUTES.LANDING} />} />
 			</Switch>
 		</React.Fragment>
 	</Router>

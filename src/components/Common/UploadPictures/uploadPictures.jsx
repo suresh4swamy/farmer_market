@@ -105,7 +105,7 @@ class UploadPicturesBase extends Component {
     render() {
         const { width, height } = this.props;
         return (
-            <div className="imgMainContainer">
+            <div className="imgMainContainer" style={{ zIndex: 1, position: "relative" }}>
                 <div className="imgListContainer">
                     <div>
                         {this.state.images && this.state.images.map((imgObj) => {

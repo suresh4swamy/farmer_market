@@ -2,8 +2,9 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
-import personalDetailsDB from './personalDetailsDB';
-import uploadFilesDB from './uploadFilesDB';
+import personalDetailsCollection from './personalDetailsCollection';
+import uploadFilesCollection from './uploadFilesCollection';
+import productDetailsCollection from './productDetailsCollection';
 
 // const config = {
 //   apiKey: process.env.REACT_APP_API_KEY,
@@ -51,10 +52,12 @@ class Firebase {
 
   // Append other Collection to this instance
   attachOtherCollection() {
-    // User personal Details DB Api
-    personalDetailsDB.call(this);
+    // User personal Details Collection Api
+    personalDetailsCollection.call(this);
+    // User product Details Collection Api
+    productDetailsCollection.call(this);
     // File upload Api
-    uploadFilesDB.call(this);
+    uploadFilesCollection.call(this);
   }
 
   // *** Auth API ***
@@ -137,6 +140,10 @@ class Firebase {
   user = uid => this.db.ref(`users/${uid}`);
 
   users = () => this.db.ref('users');
+
+  // *** Product API ***
+  product = uid => this.db.ref(`product/${uid}`);
+  products = () => this.db.ref(`products`);
 
   // *** Message API ***
   message = uid => this.db.ref(`messages/${uid}`);

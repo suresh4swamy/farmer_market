@@ -59,12 +59,11 @@ class CreateNewProductBase extends Component {
             price: "0",
             scale: "",
             cul_type: "1",
-            available_locations: [],
+            locations: "",
             description: "",
-            profile_pic: "https://img.icons8.com/dusk/64/000000/user-male-skin-type-4.png"
+            pictures: []
         },
-        cul_type_list: [{ id: "0", name: "organic" }, { id: "1", name: "trusted" }, { id: "2", name: "non-organic" }, { id: "3", name: "others" }],
-        available_location_list: [{ id: "0", name: "Farm 1" }, { id: "1", name: "Farm 2" }, { id: "2", name: "Farm 3" }]
+        cul_type_list: [{ id: "organic", name: "organic" }, { id: "trusted", name: "trusted" }, { id: "non-organic", name: "non-organic" }, { id: "others", name: "others" }]
     };
 
     componentDidMount() {
@@ -94,30 +93,30 @@ class CreateNewProductBase extends Component {
         productDetail[name] = value;
         this.setState({ productDetail });
     }
-    handleCheckBoxChoice = available_location_list => {
-        this.setState({ available_location_list });
-    }
     handleCreateBtn = event => {
+        this.props.firebase.addNewProduct(this.state.productDetail);
         this.props.onCreate();
     }
     handleCancelBtn = event => {
         this.props.onCancle();
     }
     handleUploadChange = (path, data) => {
-        this.setState({ staticImages: data });
+        const pictures = data.map(({ path }) => path);
+        const { pictures: pic, ...rest } = this.state.productDetail;
+        const productDetail = { pictures, ...rest };
+        this.setState({ staticImages: data, productDetail });
     }
 
     render() {
-        const { main_title, quantity, price, scale, cul_type, available_locations, description } = this.state.productDetail;
+        const { main_title, quantity, price, scale, cul_type, locations, description } = this.state.productDetail;
         const cul_type_list = this.state.cul_type_list;
-        const available_location_list = this.state.available_location_list;
         return (
 
             <form className="create-new-product" style={{ maxWidth: "768px", margin: "0 auto" }} onSubmit={this.handleSubmit}>
+                {/* <div className="col-12">
+                </div> */}
                 <div className="col-12">
                     <UploadPictures data={this.state.staticImages} onChange={this.handleUploadChange}></UploadPictures>
-                </div>
-                <div className="col-12">
                     <TextInput name="main_title" label="Title" value={main_title} onChange={this.handleChange} />
                     <TextArea name="description" label="Description" value={description} onChange={this.handleChange} />
                     <div className="row">
@@ -126,10 +125,7 @@ class CreateNewProductBase extends Component {
                     </div>
                     <TextInput name="scale" type="text" label="Scale / Number - Per Qty" value={scale} placeholder="e.g.:KG" onChange={this.handleChange} />
                     <DropDown name="cul_type" label="Cultivated Type" value={cul_type} data={cul_type_list} onChange={this.handleChange} />
-                    {/* <RadioOption name="cul_type" label="Cultivated Type" value={cul_type} data={cul_type_list} onChange={this.handleChange} /> */}
-                    <CheckBoxChoice name="available_location" label="Available Locations" data={available_location_list} onClick={this.handleCheckBoxChoice} />
-                    {/* <DropDown name="available_location" label="Available Locations" value={available_location} data={available_location_list} onChange={this.handleChange} /> */}
-                    {/* <UploadPictures data={this.staticImages}></UploadPictures> */}
+                    <TextArea name="locations" label="Available Location" value={locations} placeholder="Product available locations." onChange={this.handleChange} />
                 </div>
                 <div className="text-center">
                     <button type="button" className="btn btn-primary btn-circle btn-xl" onClick={this.handleCreateBtn}>
