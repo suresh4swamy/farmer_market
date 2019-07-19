@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 
 
 const ProductPanelEmpty = props => (
-    <div className="cover product-panel"></div>
+    <div className="cover product-panel" {...props}></div>
 );
 
 class ProductPanel extends Component {
     render() {
+        // console.log(this.props.product);
         return (
             <div className="cover product-panel">
                 <div className="cover-image">

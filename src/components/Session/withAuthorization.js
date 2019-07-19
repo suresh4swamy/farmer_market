@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'recompose';
 
 import { withRouter, Redirect } from 'react-router-dom';
-import * as ROUTES from '../../constants/routes';
+// import * as ROUTES from '../../constants/routes';
 
 import AuthUserContext from './context';
 import { withFirebase } from '../Firebase';

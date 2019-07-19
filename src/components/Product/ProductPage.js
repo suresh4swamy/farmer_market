@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './product.scss';
-import ProductDetails from './ProductDetails';
+// import ProductDetails from './ProductDetails';
 import CreateNewProduct, { CreateNewProductBtn } from './CreateNewProduct';
 import MyProductList from './MyProductList';
 import ProductList from './ProductList';

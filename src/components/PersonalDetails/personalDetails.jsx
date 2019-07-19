@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import * as ROUTES from '../../constants/routes';
+// import * as ROUTES from '../../constants/routes';
 
 import { TextInput, DropDown, RadioOption } from "../Common/FormElements";
 import ProfilePicture from "../Common/ProfilePic/profilePic";
@@ -79,11 +79,12 @@ class PersonalDetails extends Component {
     }
 
     getProfile = () => {
+        let { userDetails } = this.state;
         this.props.firebase.getProfile(data => {
             for (let key in data) {
-                this.state.userDetails[key] = data[key];
+                userDetails[key] = data[key];
             }
-            this.setState({ userDetails: this.state.userDetails });
+            this.setState({ userDetails });
         });
     }
 

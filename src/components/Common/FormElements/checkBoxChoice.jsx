@@ -12,7 +12,7 @@ class CheckBoxChoice extends Component {
         typeof this.props.onClick === "function" && this.props.onClick(box);
     }
     getCheckBoxes() {
-        const { name, data, onClick, value } = this.props;
+        // const { name, data, onClick, value } = this.props;
         const { box } = this.state;
         return box.map(({ id, name, checked }, index) => {
             return <div key={id} style={{ marginRight: 15, cursor: "pointer" }} className="form-check form-check-inline" onClick={() => this.handleClick(index)}>

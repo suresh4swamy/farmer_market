@@ -5,7 +5,7 @@ import { withAuthorization, withEmailVerification } from '../Session';
 
 import './product.scss';
 
-import { TextInput, TextArea, DropDown, CheckBoxChoice } from "../Common/FormElements";
+import { TextInput, TextArea, DropDown } from "../Common/FormElements";
 // import ProfilePicture from "../Common/ProfilePic/profilePic";
 
 
