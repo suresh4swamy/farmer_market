@@ -22,8 +22,6 @@ class PersonalDetails extends Component {
             profileType: "customer",
             phone: "",
             email: "",
-            // password: "",
-            // password_retype: "",
             profile_pic: "https://img.icons8.com/dusk/64/000000/user-male-skin-type-4.png"
         },
         statesList: [
@@ -117,7 +115,6 @@ class PersonalDetails extends Component {
     render() {
         const { name, address, state, profileType, phone, email, profile_pic } = this.state.userDetails;
         const { statesList, profileTypes } = this.state;
-        console.log(this.state)
         return (<form style={{ "maxWidth": "450px", "padding": "20px", "margin": "auto" }} onSubmit={this.handleSubmit}>
             <ProfilePicture src={profile_pic} onChange={this.handleProfilePicChange} firebase={this.props.firebase} />
             <TextInput name="name" label="Name" value={name} onChange={this.handleChange} />

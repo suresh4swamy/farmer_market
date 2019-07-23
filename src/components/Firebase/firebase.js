@@ -143,7 +143,7 @@ class Firebase {
 
   // *** Product API ***
   product = uid => this.db.ref(`product/${uid}`);
-  products = () => this.db.ref(`products`);
+  products = () => this.db.ref(`product`);
 
   // *** Message API ***
   message = uid => this.db.ref(`messages/${uid}`);
