@@ -19,7 +19,7 @@ import HomePage from '../Home';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import PersonalDetails from '../PersonalDetails/personalDetails';
-import ProductPage from '../Product';
+import ProductPage, { MyProductPage } from '../Product';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -43,7 +43,8 @@ const App = props => {
 					<PrivateRoute path={ROUTES.ACCOUNT} component={AccountPage} />
 					<PrivateRoute path={ROUTES.ADMIN} component={AdminPage} />
 					<PrivateRoute path={ROUTES.PERSONAL_DETAILS} component={PersonalDetails} />
-					<Route path={ROUTES.PRODUCT} component={ProductPage} />
+					<Route path={ROUTES.PRODUCTS} component={ProductPage} />
+					<PrivateRoute path={ROUTES.MY_PRODUCTS} component={MyProductPage} />
 					<Route exact path={ROUTES.LANDING} component={LandingPage} />
 					<Route render={() => <Redirect to={ROUTES.LANDING} />} />
 				</Switch>

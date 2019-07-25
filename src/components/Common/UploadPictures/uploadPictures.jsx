@@ -91,6 +91,7 @@ class UploadPicturesBase extends Component {
         let uploadingImages = [...this.state.uploadingImages, { id: "upload_" + uploadId, path: croppedImage, name }];
         this.setState({ uploadingImages, cropImage: null });
 
+        /** Uploading images to server */
         const uploadImage = this.props.firebase.uploadImage("upload_" + uploadId, { name, base64: croppedImage }, this.uploadingProgress);
         uploadImage.then(data => {
             this.uploadedSuccessful(data.url, data.id);

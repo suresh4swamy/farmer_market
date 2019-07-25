@@ -16,11 +16,11 @@ class ProductPanel extends Component {
                 </div>
                 <div className="cover-text-holder">
                     <div className="cover-text-holder-line" />
-                    <div className="cover-text-holder-title">
-                        {main_title}
-                    </div>
                     <div className="cover-text-holder-info">
                         <span className="bg-success">₹ {price}</span><span className="bg-info">{quantity} - Units</span>
+                    </div>
+                    <div className="cover-text-holder-title">
+                        {main_title}
                     </div>
                 </div>
             </div>

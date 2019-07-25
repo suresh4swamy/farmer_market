@@ -44,7 +44,10 @@ const NavigationAuth = ({ authUser }) => (
           <Link className="nav-link" to={ROUTES.PERSONAL_DETAILS} onClick={handleCollapse}>Personal Details</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to={ROUTES.PRODUCT} onClick={handleCollapse}>Product</Link>
+          <Link className="nav-link" to={ROUTES.PRODUCTS} onClick={handleCollapse}>Products</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to={ROUTES.MY_PRODUCTS} onClick={handleCollapse}>My Products</Link>
         </li>
         {!!authUser.roles[ROLES.ADMIN] && (
           <li className="nav-item">
@@ -70,7 +73,7 @@ const NavigationNonAuth = () => (
           <Link className="nav-link" to={ROUTES.LANDING} onClick={handleCollapse}>Landing</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to={ROUTES.PRODUCT} onClick={handleCollapse}>Product</Link>
+          <Link className="nav-link" to={ROUTES.PRODUCTS} onClick={handleCollapse}>Product</Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link" to={ROUTES.SIGN_IN} onClick={handleCollapse}>Sign In</Link>

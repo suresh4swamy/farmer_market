@@ -38,22 +38,10 @@
 }
 
 /* My Product List Component styles */
-.my-product-list {
-    .my-product-list-title {
-        font-size: 2em;
-        margin: 2rem;
-        margin-bottom: 0;
-    }
-    .list-of-products {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: space-around;
-    }
-}
-
 /* Product List Component styles */
+.my-product-list,
 .product-list {
+	.my-product-list-title,
     .product-list-title {
         font-size: 2em;
         margin: 2rem;
@@ -63,7 +51,8 @@
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
-        justify-content: space-around;
+		justify-content: flex-start;
+		margin: 10px 30px;
     }
 }
 
@@ -71,17 +60,18 @@
 .product-panel {
 	&.cover {
 		position: relative;
-		margin: 2rem;
-		width: 200px;
-		height: 250px;
+		margin: 0.8rem 2rem 0 0;
+		width: 350px;
+		height: 400px;
 		background: #f6fdf5;
-		border-radius: 0.8rem;
+		border-radius: 0.2rem;
 		transition: box-shadow 0.3s, transform 0.3s;
 		overflow: hidden;
 		box-shadow: 0 0 0 2px rgb(120, 120, 120), 0 0 12px 2.25px #777;
 		&:empty {
 			height: 0;
             margin-bottom: 0;
+            margin-top: 0;
             box-shadow: none;
 		}
 		&:hover {
@@ -91,8 +81,8 @@
 			inset -0.1rem 0 0 0 rgba(0, 0, 0, 0.05),
 			inset 0 -0.1rem 0 0 rgba(0, 0, 0, 0.08), 0 0.4rem 2rem rgba(0, 0, 0, 0.05);
 			transform: translateY(-0.2rem);
-			.cover-image {
-				height: 30%;
+			.cover-text-holder {
+				height: 50%;
 			}
 		}
 		img {
@@ -110,8 +100,8 @@
 			position: absolute;
 		}
 		.cover-image {
-			transition: height ease-in-out 0.3s;
-			height: 70%;
+			height: 100%;
+			border: 1px solid #fff;
 			.cover-image-holder {
 				display: -ms-flexbox;
 				display: flex;
@@ -122,6 +112,7 @@
 				-ms-flex-item-align: end;
 				align-self: flex-end;
 				height: 100%;
+				border-radius: .3rem .3rem 0 0;
 				overflow: hidden;
 				background-image: url("https://firebasestorage.googleapis.com/v0/b/farmersaleplatfo-1561457656175.appspot.com/o/images%2Fanimal_rip_021563445560264.jpeg?alt=media&token=03513c4a-71a8-451a-b11c-fa7d37ecdad0");
 				background-size: cover;
@@ -131,28 +122,49 @@
 		}
 		.cover-text-holder {
 			text-align: center;
-			background-color: #f6fdf5;
+			background-color: rgba(0, 0, 0, 0.7);
+			color: #fff;
+			height: 20%;
+			position: absolute;
+			bottom: 1px;
+			left: 0;
+			right: 0;
+			margin: auto;
+			width: calc(100% - 2px);
+			border-radius: 0 0 .3rem .3rem;
+			transition: height ease-in-out 0.2s;
 			.cover-text-holder-title {
 				font-size: 1.75em;
 			}
 			.cover-text-holder-info {
 				font-size: 0.85em;
 				color: lightgray;
-				bottom: 15px;
-				position: absolute;
+				position: relative;
 				text-align: right;
-				width: 100%;
+				width: calc(100% - 2px);
 				display: flex;
-				justify-content: space-around;
+				margin: 0 1px;
+				justify-content: space-between;
 				span {
 					display: inline-block;
-					padding: 0 10px;
-					text-align: center;
-					border-radius: 3px;
+					padding: 0 16px 0 6px;
+					text-align: left;
+					min-width: 50%;
+					font-size: 20px;
+					line-height: 37px;
+					height: 30px;
+					color: #fff;
+					background-color: rgba(40, 167, 69, 0.1) !important;
+				}
+				span:last-child {
+					text-align: right;
+					padding: 0 6px 0 16px;
+					background-color: rgba(23, 162, 184, 0.1) !important;
 				}
 			}
 			.cover-text-holder-line {
 				border: 1px solid rgba(52, 59, 64, 0.85);
+				margin: 0 1px;
 			}
 		}
   	}

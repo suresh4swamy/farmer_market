@@ -5,7 +5,7 @@ import CreateNewProduct, { CreateNewProductBtn } from './CreateNewProduct';
 import MyProductList from './MyProductList';
 import ProductList from './ProductList';
 
-class ProductPage extends Component {
+class MyProductPage extends Component {
     state = {
         showAddNewProduct: false
     }
@@ -26,15 +26,12 @@ class ProductPage extends Component {
     render() {
         return (
             <div className="product-page">
-                {/* {!this.state.showAddNewProduct && <div><ProductDetails /></div>} */}
-                {/* {!this.state.showAddNewProduct && <div><MyProductList /></div>} */}
-                {!this.state.showAddNewProduct && <div><ProductList /></div>}
-                {/* {this.state.showAddNewProduct && <CreateNewProduct {...this.createNewProduct} />}
-                {!this.state.showAddNewProduct && <CreateNewProductBtn onClick={this.handleAddNewProductBtn} />} */}
-
+                {!this.state.showAddNewProduct && <div><MyProductList /></div>}
+                {this.state.showAddNewProduct && <CreateNewProduct {...this.createNewProduct} />}
+                {!this.state.showAddNewProduct && <CreateNewProductBtn onClick={this.handleAddNewProductBtn} />}
             </div>
         );
     };
 }
 
-export default ProductPage;
+export default MyProductPage;
