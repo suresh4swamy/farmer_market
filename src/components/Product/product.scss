@@ -55,7 +55,17 @@
 		margin: 10px 30px;
 
 		.card{
-			background-color: #FFFFFF !important;
+			background-color: rgba(5, 192, 255, 0.05) !important;
+			margin: 0.5rem;
+			box-shadow: 0 0 4px 0.5px #999;
+		}
+		.card-title {
+			margin:0;
+			margin-top: 0.75rem;
+		}
+		.card-body {
+			padding: 1rem;
+			background-color: rgba(0, 123, 255, 0.05);
 		}
     }
 }

@@ -9,4 +9,5 @@ export const ADMIN_DETAILS = '/admin/:id';
 export const PERSONAL_DETAILS = "/personal-details";
 export const PRODUCTS = "/product";
 export const MY_PRODUCTS = "/my-product";
+export const MY_CART = "/my-cart";
 export const PRODUCT_DETAILS = "/product/:id";
