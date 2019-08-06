@@ -20,10 +20,16 @@ class ProductPanelBase extends Component {
         qty: 0
     }
 
+    componentDidMount() {
+        const product = this.props.myCart.cartList[this.props.product._id.replace(/[-]/g, "")];
+        const qty = product && typeof product.count === "number" ? product.count : 0;
+        this.setState({ qty });
+    }
+
     _addToCart = (inc) => {
         this.setState((state, props) => {
             const { _id: id, ...rest } = this.props.product;
-            this.props.myCart.addToCart({ id, ...rest }, inc);
+            this.props.myCart.addToCart({ id: id.replace(/[-]/g, ""), ...rest }, inc);
             return { qty: state.qty + inc }
         });
     }

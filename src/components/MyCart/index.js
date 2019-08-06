@@ -8,16 +8,15 @@ let MyCartState = {
 
     },
     addToCart: (item, count) => {
-        if (MyCartState.cartList[item.id] && MyCartState.cartList[item.id].count) {
+        if (MyCartState.cartList[item.id] && typeof MyCartState.cartList[item.id].count === "number") {
             MyCartState.cartList[item.id].count += count;
         } else {
             MyCartState.cartList[item.id] = item;
-            MyCartState.cartList[item.id].count = 0;
+            MyCartState.cartList[item.id].count = 1;
         }
-        console.log(MyCartState.cartList);
-        MyCartState.resetCount();
+        MyCartState.refreshCount();
     },
-    resetCount: () => {
+    refreshCount: () => {
         let count = 0;
         for (let key in MyCartState.cartList) {
             count += MyCartState.cartList[key].count;

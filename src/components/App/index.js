@@ -32,10 +32,11 @@ toast.configure();
 
 // $.something();
 const App = props => {
+	console.log("App Component.");
 	return (
-		<Router>
-			<React.Fragment>
-				<MyCartContext.Provider value={MyCartState}>
+		<MyCartContext.Provider value={MyCartState}>
+			<Router>
+				<React.Fragment>
 					<Navigation />
 					<Switch>
 						<Route path={ROUTES.SIGN_UP} component={SignUpPage} />
@@ -51,9 +52,9 @@ const App = props => {
 						<Route exact path={ROUTES.LANDING} component={LandingPage} />
 						<Route render={() => <Redirect to={ROUTES.LANDING} />} />
 					</Switch>
-				</MyCartContext.Provider>
-			</React.Fragment>
-		</Router>
+				</React.Fragment>
+			</Router>
+		</MyCartContext.Provider>
 	);
 };
 
