@@ -20,7 +20,7 @@ import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import PersonalDetails from '../PersonalDetails/personalDetails';
 import ProductPage, { MyProductPage } from '../Product';
-import MyCart, { MyCartContext, MyCartState } from '../MyCart';
+import MyCart, { MyCartContext, MyCartItems } from '../MyCart';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -34,7 +34,7 @@ toast.configure();
 const App = props => {
 	console.log("App Component.");
 	return (
-		<MyCartContext.Provider value={MyCartState}>
+		<MyCartContext.Provider value={MyCartItems}>
 			<Router>
 				<React.Fragment>
 					<Navigation />

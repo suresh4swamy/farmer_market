@@ -3,26 +3,26 @@ import { MyCartContext } from '../MyCart';
 
 import './styles.scss';
 
-let MyCartState = {
+let MyCartItems = {
     count: 0,
-    cartList: {
+    items: {
 
     },
     addToCart: (item, count) => {
-        if (MyCartState.cartList[item.id] && typeof MyCartState.cartList[item.id].count === "number") {
-            MyCartState.cartList[item.id].count += count;
+        if (MyCartItems.items[item.id] && typeof MyCartItems.items[item.id].count === "number") {
+            MyCartItems.items[item.id].count += count;
         } else {
-            MyCartState.cartList[item.id] = item;
-            MyCartState.cartList[item.id].count = count;
+            MyCartItems.items[item.id] = item;
+            MyCartItems.items[item.id].count = count;
         }
-        MyCartState.refreshCount();
+        MyCartItems.refreshCount();
     },
     refreshCount: () => {
         let count = 0;
-        for (let key in MyCartState.cartList) {
-            count += MyCartState.cartList[key].count;
+        for (let key in MyCartItems.items) {
+            count += MyCartItems.items[key].count;
         }
-        MyCartState.count = count;
+        MyCartItems.count = count;
     }
 }
 
@@ -33,7 +33,8 @@ class MyCartList extends Component {
                 <i className="fas fa-cart-arrow-down"></i>
                 <MyCartContext.Consumer>
                     {myCart => (
-                        <span> {myCart.count}</span>
+                        myCart.count ?
+                            <span>  {myCart.count}</span> : ""
                     )}
                 </MyCartContext.Consumer>
             </div>
@@ -41,5 +42,5 @@ class MyCartList extends Component {
     }
 }
 
-export { MyCartState }
+export { MyCartItems }
 export default MyCartList;

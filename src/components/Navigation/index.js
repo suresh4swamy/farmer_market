@@ -61,7 +61,7 @@ const NavigationAuth = ({ authUser }) => (
           </li>
         </ul>
       </div>
-      <a className="navbar-brand" href="/" onClick={event => event.preventDefault()}><MyCartList /></a>
+      <Link className="navbar-brand" to={ROUTES.MY_CART} onClick={handleCollapse}><MyCartList /></Link>
     </nav>
   </React.Fragment>
 );
@@ -85,7 +85,7 @@ const NavigationNonAuth = () => (
           </li>
         </ul>
       </div>
-      <a className="navbar-brand" href="/" onClick={event => event.preventDefault()}><MyCartList /></a>
+      <Link className="navbar-brand" to={ROUTES.MY_CART} onClick={handleCollapse}><MyCartList /></Link>
     </nav>
   </React.Fragment>
 );

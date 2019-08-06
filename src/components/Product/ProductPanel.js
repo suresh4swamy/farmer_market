@@ -21,7 +21,7 @@ class ProductPanelBase extends Component {
     }
 
     componentDidMount() {
-        const product = this.props.myCart.cartList[this.props.product._id.replace(/[-]/g, "")];
+        const product = this.props.myCart.items[this.props.product._id.replace(/[-]/g, "")];
         const qty = product && typeof product.count === "number" ? product.count : 0;
         this.setState({ qty });
     }
