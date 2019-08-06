@@ -12,7 +12,7 @@ let MyCartState = {
             MyCartState.cartList[item.id].count += count;
         } else {
             MyCartState.cartList[item.id] = item;
-            MyCartState.cartList[item.id].count = 1;
+            MyCartState.cartList[item.id].count = count;
         }
         MyCartState.refreshCount();
     },
