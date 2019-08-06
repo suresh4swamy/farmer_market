@@ -1,0 +1,7 @@
+﻿https://suresh4swamy.github.io
+
+Client ID:
+798114275164-cktjfs6el9nkvv61kdkqtn8i1paa9bek.apps.googleusercontent.com
+
+Client Secret:
+UKkweTZ282eq8EV9qSSZqVDQ
