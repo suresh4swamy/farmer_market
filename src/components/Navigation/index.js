@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { AuthUserContext } from '../Session';
 import SignOutButton from '../SignOut';
-import { MyCartCount } from '../MyCart';
+import { MyCartList } from '../MyCart';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 import $ from 'jquery';
@@ -61,8 +61,8 @@ const NavigationAuth = ({ authUser }) => (
           </li>
         </ul>
       </div>
+      <a className="navbar-brand" href="/" onClick={event => event.preventDefault()}><MyCartList /></a>
     </nav>
-    <MyCartCount />
   </React.Fragment>
 );
 const NavigationNonAuth = () => (
@@ -85,7 +85,7 @@ const NavigationNonAuth = () => (
           </li>
         </ul>
       </div>
-      <a className="navbar-brand" href="/" onClick={event => event.preventDefault()}><MyCartCount /></a>
+      <a className="navbar-brand" href="/" onClick={event => event.preventDefault()}><MyCartList /></a>
     </nav>
   </React.Fragment>
 );

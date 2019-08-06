@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ProductPanel, { ProductPanelEmpty } from './ProductPanel';
+import { MyProductPanel, ProductPanelEmpty } from './ProductPanel';
 
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
@@ -38,7 +38,7 @@ class MyProductListBase extends Component {
                 <div className="my-product-list-title">My Product List</div>
                 <div className="list-of-products">
                     {my_product_list.map((product, index) => (
-                        <ProductPanel key={index} product={product} />
+                        <MyProductPanel key={index} product={product} />
                     ))}
                     <ProductPanelEmpty />
                     <ProductPanelEmpty />
