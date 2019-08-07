@@ -1,5 +1,72 @@
 .my-cart-btn-cntr {
-    .fa-cart-arrow-down {
-        color: #fff;
+  .fa-cart-arrow-down {
+    color: #fff;
+  }
+}
+
+.my-cart-list-container {
+  list-style: none;
+  .my-cart-item-panel {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    height: 180px;
+    max-width: 50%;
+    margin: 15px 0;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #666;
+    border-radius: 2px;
+    .my-cart-item-close-btn {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      color: #666;
+      z-index: 10;
     }
+    .my-cart-item-img-cntr,
+    .my-cart-item-props {
+      justify-content: flex-start;
+    }
+    .my-cart-item-img-cntr {
+      width: 200px;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      .my-cart-item-img {
+        max-width: 200px;
+        max-height: 200px;
+      }
+    }
+    .my-cart-item-props {
+      position: relative;
+      padding: 1rem;
+      background-color: #eee;
+      min-width: calc(100% - 200px);
+      .my-cart-item-props-title {
+        font-weight: 600;
+        font-size: 20px;
+      }
+      .my-cart-item-props-btn-amt-cntr {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        position: absolute;
+        bottom: 10px;
+        width: calc(100% - 30px);
+        & > div {
+          display: inline-block;
+          min-width: 100px;
+        }
+        & > .my-cart-item-props-btn-cntr {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        & > .my-cart-item-props-amt {
+          text-align: right;
+          font-weight: 600;
+          color: orange;
+        }
+      }
+    }
+  }
 }
